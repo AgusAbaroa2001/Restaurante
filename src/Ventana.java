@@ -2,11 +2,15 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 import javax.swing.*;
 
 public class Ventana extends JFrame{
     public JPanel panel;
+    public String nombreUser; 
+    public String correoUser;
     public Ventana() {
         this.setSize(900,700); // medidas provisionales, se pueden cambiar
         this.setLocationRelativeTo(null);
@@ -79,6 +83,47 @@ public class Ventana extends JFrame{
 
 
         login.add(btnLogin);
+
+        btnLogin.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+                String correo = campoCorreo.getText();
+                String password = String.valueOf(campoPass.getPassword());
+                String[] data;
+
+                try{
+
+                    BufferedReader BR = new BufferedReader(new FileReader("users.txt"));
+                    String renglon;
+                    boolean validacion = false;
+
+                    while((renglon = BR.readLine()) != null ){
+
+                        data = renglon.split(",");
+
+                        if (data[2].equals(correo) && data[3].equals(password)) {
+                        	
+                            nombreUser=data[0];
+                            correoUser=data[2];
+
+                            JOptionPane.showMessageDialog(null, "Bienvenido "+ nombreUser,"INGRESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
+                            //actualizarPanel(2);
+                            
+                            validacion = true;
+
+                        }
+                    }
+                    if (validacion == false){
+                        JOptionPane.showMessageDialog(null, "El usuario y contraseña no coindicen","Error!", JOptionPane.ERROR_MESSAGE);
+                    }
+                    
+                }catch(Exception f){
+                	System.err.println("No se encontro archivo");
+                }
+			}			
+		});
 
         JButton btnCancelar = new JButton();
         btnCancelar.setFont(new Font("Franklin Gothic Demi", Font.TRUETYPE_FONT, 15));

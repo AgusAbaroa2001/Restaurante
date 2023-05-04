@@ -1,0 +1,5 @@
+Jonathan Giovanni,Soto Munoz,jsoto@uabcs.mx,yona1213,
+Admin,i,admin@uabcs.mx,1,
+Alma Delia,Vargas Gonzalez,almadeliav_21@gmail.com,gatito1,
+Jose Agustin,Abaroa,agustilin@uabcs,123,
+Hazael,Flores Gastelum,hazaelf_21@alu.uabcs.mx,caradeburro,
