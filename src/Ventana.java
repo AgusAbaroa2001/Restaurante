@@ -9,12 +9,12 @@ import javax.swing.*;
 
 public class Ventana extends JFrame{
     public JPanel panel;
-    public String nombreUser; 
+    public String nombreUser;
     public String correoUser;
     public Ventana() {
         this.setSize(900,700); // medidas provisionales, se pueden cambiar
         this.setLocationRelativeTo(null);
-        this.setTitle("Ventana");
+        this.setTitle("Restaurante menu");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);
@@ -32,48 +32,57 @@ public class Ventana extends JFrame{
     public JPanel login() {
 
         JPanel login = new JPanel();
-        login.setSize(this.getWidth(),this.getHeight());
-        login.setBackground(Color.decode("#D7751E"));
-        login.setLocation(0,0);
+        login.setSize(this.getWidth(), this.getHeight());
+        login.setBackground(Color.decode("#F46B31"));
+        login.setLocation(0, 0);
         login.setLayout(null);
 
-        JLabel lblLogin = new JLabel("Iniciar Sesión");
-        lblLogin.setFont(new Font("Franklin Gothic Demi", Font.TRUETYPE_FONT, 40));
-        lblLogin.setForeground(Color.decode("#FFFFFF"));
+        JPanel deco1 = new JPanel();
+        deco1.setSize(this.getWidth(), this.getHeight());
+        deco1.setBackground(Color.decode("#FFF6A9"));
+        deco1.setSize(850,600);
+        deco1.setLocation(20, 25);
+        login.add(deco1);
+
+
+
+        JLabel lblLogin = new JLabel("Login");
+        lblLogin.setFont(new Font("SansSerif", Font.BOLD, 40));
+        lblLogin.setForeground(Color.decode("#923914"));
         lblLogin.setSize(300,50);
-        lblLogin.setLocation(330,50);
-        login.add(lblLogin);
+        lblLogin.setLocation(50,25);
+        deco1.add(lblLogin);
 
 
 
         JLabel lblCorreo = new JLabel("Ingrese Su Correo");
-        lblCorreo.setFont(new Font("Franklin Gothic Demi", Font.TRUETYPE_FONT, 20));
+        lblCorreo.setFont(new Font("SansSerif", Font.BOLD, 20));
         lblCorreo.setForeground(Color.decode("#FFFFFF"));
         lblCorreo.setSize(200,50);
         lblCorreo.setLocation(365,170);
-        login.add(lblCorreo);
+        deco1.add(lblCorreo);
 
         JTextField campoCorreo = new JTextField();
-        campoCorreo.setFont(new Font("Franklin Gothic Demi", Font.TRUETYPE_FONT, 15));
+        campoCorreo.setFont(new Font("SansSerif", Font.BOLD, 15));
         campoCorreo.setSize(350,30);
         campoCorreo.setLocation(285,225);
-        login.add(campoCorreo);
+        deco1.add(campoCorreo);
 
         JLabel lblPass = new JLabel("Ingrese Su Contraseña");
-        lblPass.setFont(new Font("Franklin Gothic Demi", Font.TRUETYPE_FONT, 20));
+        lblPass.setFont(new Font("SansSerif", Font.BOLD, 20));
         lblPass.setForeground(Color.decode("#FFFFFF"));
         lblPass.setSize(350,50);
         lblPass.setLocation(350,315);
-        login.add(lblPass);
+        deco1.add(lblPass);
 
         JPasswordField campoPass = new JPasswordField();
         campoPass.setSize(350,30);
-        campoPass.setFont(new Font("Franklin Gothic Demi", Font.TRUETYPE_FONT, 20));
+        campoPass.setFont(new Font("SansSerif", Font.BOLD, 20));
         campoPass.setLocation(285,375);
-        login.add(campoPass);
+        deco1.add(campoPass);
 
         JButton btnLogin = new JButton();
-        btnLogin.setFont(new Font("Franklin Gothic Demi", Font.TRUETYPE_FONT, 15));
+        btnLogin.setFont(new Font("SansSerif", Font.BOLD, 15));
         btnLogin.setSize(150, 40);
         btnLogin.setLocation(300, 550);
         btnLogin.setText("Iniciar Sesion");
@@ -82,12 +91,12 @@ public class Ventana extends JFrame{
         btnLogin.setForeground(Color.decode("#FFFFFF"));
 
 
-        login.add(btnLogin);
+        deco1.add(btnLogin);
 
         btnLogin.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
                 String correo = campoCorreo.getText();
                 String password = String.valueOf(campoPass.getPassword());
@@ -104,13 +113,13 @@ public class Ventana extends JFrame{
                         data = renglon.split(",");
 
                         if (data[2].equals(correo) && data[3].equals(password)) {
-                        	
+
                             nombreUser=data[0];
                             correoUser=data[2];
 
                             JOptionPane.showMessageDialog(null, "Bienvenido "+ nombreUser,"INGRESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
                             //actualizarPanel(2);
-                            
+
                             validacion = true;
 
                         }
@@ -118,12 +127,12 @@ public class Ventana extends JFrame{
                     if (validacion == false){
                         JOptionPane.showMessageDialog(null, "El usuario y contraseña no coindicen","Error!", JOptionPane.ERROR_MESSAGE);
                     }
-                    
+
                 }catch(Exception f){
-                	System.err.println("No se encontro archivo");
+                    System.err.println("No se encontro archivo");
                 }
-			}			
-		});
+            }
+        });
 
         JButton btnCancelar = new JButton();
         btnCancelar.setFont(new Font("Franklin Gothic Demi", Font.TRUETYPE_FONT, 15));
