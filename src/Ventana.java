@@ -73,45 +73,45 @@ public class Ventana extends JFrame{
         */
 
         JLabel lblLogin = new JLabel("Login");
-        lblLogin.setFont(new Font("SansSerif", Font.BOLD, 40));
+            lblLogin.setFont(new Font("Helvetica", Font.BOLD, 60));
         lblLogin.setForeground(Color.decode("#923914"));
-        lblLogin.setSize(300,50);
+        lblLogin.setSize(300,100);
         lblLogin.setLocation(50,25);
         deco1.add(lblLogin);
 
         JLabel lblCorreo = new JLabel("Ingrese Su Correo");
         lblCorreo.setFont(new Font("SansSerif", Font.BOLD, 20));
-        lblCorreo.setForeground(Color.decode("#C2501"));
+        lblCorreo.setForeground(Color.decode("#C2501F"));
         lblCorreo.setSize(200,50);
-        lblCorreo.setLocation(365,170);
+        lblCorreo.setLocation(50,170);
         deco1.add(lblCorreo);
 
         JTextField campoCorreo = new JTextField();
         campoCorreo.setFont(new Font("SansSerif", Font.BOLD, 15));
         campoCorreo.setSize(350,50);
-        campoCorreo.setLocation(285,225);
+        campoCorreo.setLocation(50,225);
         deco1.add(campoCorreo);
 
         JLabel lblPass = new JLabel("Ingrese Su Contraseña");
         lblPass.setFont(new Font("SansSerif", Font.BOLD, 20));
-        lblPass.setForeground(Color.decode("#C2501"));
+        lblPass.setForeground(Color.decode("#C2501F"));
         lblPass.setSize(350,50);
-        lblPass.setLocation(1,315);
+        lblPass.setLocation(50,315);
         deco1.add(lblPass);
 
         JPasswordField campoPass = new JPasswordField();
-        campoPass.setSize(350,30);
+        campoPass.setSize(350,50);
         campoPass.setFont(new Font("SansSerif", Font.BOLD, 20));
-        campoPass.setLocation(285,375);
+        campoPass.setLocation(50,375);
         deco1.add(campoPass);
 
         JButton btnLogin = new JButton();
-        btnLogin.setFont(new Font("SansSerif", Font.BOLD, 15));
-        btnLogin.setSize(150, 40);
-        btnLogin.setLocation(300, 550);
+        btnLogin.setFont(new Font("SansSerif", Font.BOLD, 20));
+        btnLogin.setSize(180, 40);
+        btnLogin.setLocation(150, 480);
         btnLogin.setText("Iniciar Sesion");
         btnLogin.setFocusPainted(false);
-        btnLogin.setBackground(Color.decode("#2C3333"));
+        btnLogin.setBackground(Color.decode("#F36B31"));
         btnLogin.setForeground(Color.decode("#FFFFFF"));
         btnLogin.repaint();
         btnLogin.revalidate();
