@@ -12,6 +12,10 @@ public class Ventana extends JFrame{
     public JPanel panel;
     public String nombreUser;
     public String correoUser;
+
+    public int anterior;
+    public int actual;
+
     public Ventana() {
         this.setSize(900,700); // medidas provisionales, se pueden cambiar
         this.setLocationRelativeTo(null);
@@ -30,6 +34,7 @@ public class Ventana extends JFrame{
         this.setVisible(true);
     }
 
+    //-------------------------------pantalla de login--------------------------------
     public JPanel login() {
 
         JPanel login = new JPanel();
@@ -39,30 +44,33 @@ public class Ventana extends JFrame{
         login.setLayout(null);
 
         JPanel deco1 = new JPanel();
-        deco1.setSize(this.getWidth(), this.getHeight());
         deco1.setBackground(Color.decode("#FFF6A9"));
         deco1.setSize(850,600);
         deco1.setLocation(20, 25);
+        deco1.setLayout(null);
+        deco1.repaint();
+        deco1.revalidate();
         login.add(deco1);
 
 
-//        JLabel lblFechaHora = new JLabel();
-//        lblFechaHora.setFont(new Font("SansSerif", Font.BOLD, 20));
-//        lblFechaHora.setForeground(Color.decode("#C2501"));
-//        lblFechaHora.setSize(350,50);
-//        lblFechaHora.setLocation(365,270);
-//        deco1.add(lblFechaHora);
-//
-//// intento fecha y hora
-//        Timer timer = new Timer(1000, new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                Date now = new Date();
-//                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-//                lblFechaHora.setText(format.format(now));
-//            }
-//        });
-//        timer.start();
+/*      JLabel lblFechaHora = new JLabel();
+        lblFechaHora.setFont(new Font("SansSerif", Font.BOLD, 20));
+        lblFechaHora.setForeground(Color.decode("#C2501"));
+        lblFechaHora.setSize(350,50);
+        lblFechaHora.setLocation(365,270);
+        deco1.add(lblFechaHora);
+
+       // intento fecha y hora
+        Timer timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Date now = new Date();
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                lblFechaHora.setText(format.format(now));
+           }
+        });
+        timer.start();
+        */
 
         JLabel lblLogin = new JLabel("Login");
         lblLogin.setFont(new Font("SansSerif", Font.BOLD, 40));
@@ -70,8 +78,6 @@ public class Ventana extends JFrame{
         lblLogin.setSize(300,50);
         lblLogin.setLocation(50,25);
         deco1.add(lblLogin);
-
-
 
         JLabel lblCorreo = new JLabel("Ingrese Su Correo");
         lblCorreo.setFont(new Font("SansSerif", Font.BOLD, 20));
@@ -82,7 +88,7 @@ public class Ventana extends JFrame{
 
         JTextField campoCorreo = new JTextField();
         campoCorreo.setFont(new Font("SansSerif", Font.BOLD, 15));
-        campoCorreo.setSize(350,30);
+        campoCorreo.setSize(350,50);
         campoCorreo.setLocation(285,225);
         deco1.add(campoCorreo);
 
@@ -107,7 +113,8 @@ public class Ventana extends JFrame{
         btnLogin.setFocusPainted(false);
         btnLogin.setBackground(Color.decode("#2C3333"));
         btnLogin.setForeground(Color.decode("#FFFFFF"));
-
+        btnLogin.repaint();
+        btnLogin.revalidate();
 
         deco1.add(btnLogin);
 
@@ -136,7 +143,7 @@ public class Ventana extends JFrame{
                             correoUser=data[2];
 
                             JOptionPane.showMessageDialog(null, "Bienvenido "+ nombreUser,"INGRESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
-                            //actualizarPanel(2);
+                            actualizarPanel(1);
 
                             validacion = true;
 
@@ -152,31 +159,114 @@ public class Ventana extends JFrame{
             }
         });
 
-        JButton btnCancelar = new JButton();
-        btnCancelar.setFont(new Font("Franklin Gothic Demi", Font.TRUETYPE_FONT, 15));
-        btnCancelar.setSize(150, 40);
-        btnCancelar.setLocation(490, 550);
-        btnCancelar.setText("Cancelar");
-        btnCancelar.setFocusPainted(false);
-        btnCancelar.setBackground(Color.decode("#2C3333"));
-        btnCancelar.setForeground(Color.decode("#FFFFFF"));
-
-        btnCancelar.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                JOptionPane.showMessageDialog(null,"Adios");
-                campoPass.setText("");
-                campoCorreo.setText("");
-
-            }
-
-        });
-
-        login.add(btnCancelar);
         // this.add(login);
         return login;
+    }
+
+    //-----------------esta es la pantalla de inicio despues del login---------------------------------
+    public JPanel pantallaInicio(){
+
+        JPanel inicio = new JPanel();
+        inicio.setSize(this.getWidth(),this.getHeight());
+        inicio.setBackground(Color.decode("#D7751E"));
+        inicio.setLayout(null);
+
+        JLabel platos = new JLabel("Platillos");
+        platos.setSize(100,100);
+        platos.setLocation(150,80);
+        inicio.add(platos);
+
+        JButton consulta = new JButton("Consultar");
+        consulta.setSize(100,100);
+        consulta.setLocation(170,80);
+        consulta.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarPanel(2);
+
+            }
+        });
+
+        inicio.add(consulta);
+
+
+        return inicio;
+
+    }
+
+    //---------------aqui es la pantalla de consulta en la seccion platillos-----------------
+    public JPanel consultaPlatillo(){
+
+        JPanel consultaScreen = new JPanel();
+        consultaScreen.setSize(this.getWidth(),this.getHeight());
+        consultaScreen.setLayout(null);
+
+        JLabel comida1 = new JLabel("Tacos");
+        comida1.setSize(100,30);
+        comida1.setLocation(150,80);
+        consultaScreen.add(comida1);
+
+        JButton crear = new JButton("Crear Pedido");
+        crear.setSize(150,30);
+        crear.setLocation(250,200);
+
+        crear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarPanel(3);
+
+            }
+        });
+
+        consultaScreen.add(crear);
+
+
+        return consultaScreen;
+    }
+
+    public JPanel CrearPlatillo(){
+        JPanel creacion = new JPanel();
+        creacion.setSize(this.getWidth(),this.getHeight());
+        creacion.setLayout(null);
+
+        JLabel crear1 = new JLabel("Creacion de Platillo");
+        crear1.setSize(150,100);
+        crear1.setLocation(150,120);
+        creacion.add(crear1);
+
+
+        return creacion;
+    }
+
+
+//--------------funcion de actualizar las pantallas-----------------
+   public void actualizarPanel(int ventSiguiente) {
+
+        anterior=actual;
+        actual=ventSiguiente;
+
+        if(panel!= null) {
+            this.remove(panel);
+        }
+
+        switch (actual) {
+
+            case 1:
+                panel = pantallaInicio();
+                this.add(panel);
+                break;
+            case 2:
+                panel = consultaPlatillo();
+                this.add(panel);
+                break;
+            case 3:
+                panel = CrearPlatillo();
+                this.add(panel);
+                break;
+        }
+
+        this.repaint();
+        this.revalidate();
     }
 
 }
