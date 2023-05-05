@@ -53,25 +53,6 @@ public class Ventana extends JFrame{
         login.add(deco1);
 
 
-/*      JLabel lblFechaHora = new JLabel();
-        lblFechaHora.setFont(new Font("SansSerif", Font.BOLD, 20));
-        lblFechaHora.setForeground(Color.decode("#C2501"));
-        lblFechaHora.setSize(350,50);
-        lblFechaHora.setLocation(365,270);
-        deco1.add(lblFechaHora);
-
-       // intento fecha y hora
-        Timer timer = new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Date now = new Date();
-                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                lblFechaHora.setText(format.format(now));
-           }
-        });
-        timer.start();
-        */
-
         JLabel lblLogin = new JLabel("Login");
             lblLogin.setFont(new Font("Helvetica", Font.BOLD, 60));
         lblLogin.setForeground(Color.decode("#923914"));
@@ -172,13 +153,13 @@ public class Ventana extends JFrame{
         inicio.setLayout(null);
 
         JLabel platos = new JLabel("Platillos");
-        platos.setSize(100,100);
+        platos.setSize(200,200);
         platos.setLocation(150,80);
         inicio.add(platos);
 
         JButton consulta = new JButton("Consultar");
-        consulta.setSize(100,100);
-        consulta.setLocation(170,80);
+        consulta.setSize(100,30);
+        consulta.setLocation(170,180);
         consulta.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -187,7 +168,29 @@ public class Ventana extends JFrame{
             }
         });
 
+        JButton crear = new JButton("Crear");
+        crear.setSize(100,30);
+        crear.setLocation(170,80);
+
+
+        crear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
         inicio.add(consulta);
+
+        JLabel ordenes = new JLabel("Ordenes");
+        ordenes.setSize(200,200);
+        ordenes.setLocation(350,80);
+        inicio.add(ordenes);
+
+        JButton consulta1 = new JButton("Consultar");
+        consulta1.setSize(100,50);
+        consulta1.setLocation(150,380);
+        inicio.add(consulta1);
 
 
         return inicio;
@@ -209,7 +212,6 @@ public class Ventana extends JFrame{
         JButton crear = new JButton("Crear Pedido");
         crear.setSize(150,30);
         crear.setLocation(250,200);
-
         crear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -218,12 +220,25 @@ public class Ventana extends JFrame{
             }
         });
 
+        JButton atras = new JButton("Atras");
+        atras.setSize(150,30);
+        atras.setLocation(350,200);
+
+        atras.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarPanel(1);
+            }
+        });
+
+        consultaScreen.add(atras);
         consultaScreen.add(crear);
 
 
         return consultaScreen;
     }
 
+    //------------------creacion de platillos-----------------------
     public JPanel CrearPlatillo(){
         JPanel creacion = new JPanel();
         creacion.setSize(this.getWidth(),this.getHeight());
@@ -231,9 +246,14 @@ public class Ventana extends JFrame{
 
         JLabel crear1 = new JLabel("Creacion de Platillo");
         crear1.setSize(150,100);
-        crear1.setLocation(150,120);
+        crear1.setLocation(250,40);
         creacion.add(crear1);
 
+        JLabel name = new JLabel("Nombre ");
+        name.setSize(400,40);
+        name.setLocation(70,150);
+        name.setFont(new Font("Helvetica", Font.BOLD, 40));
+        creacion.add(name);
 
         return creacion;
     }
