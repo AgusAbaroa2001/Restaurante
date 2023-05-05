@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.text.SimpleDateFormat;
 
 import javax.swing.*;
 
@@ -45,6 +46,23 @@ public class Ventana extends JFrame{
         login.add(deco1);
 
 
+//        JLabel lblFechaHora = new JLabel();
+//        lblFechaHora.setFont(new Font("SansSerif", Font.BOLD, 20));
+//        lblFechaHora.setForeground(Color.decode("#C2501"));
+//        lblFechaHora.setSize(350,50);
+//        lblFechaHora.setLocation(365,270);
+//        deco1.add(lblFechaHora);
+//
+//// intento fecha y hora
+//        Timer timer = new Timer(1000, new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                Date now = new Date();
+//                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+//                lblFechaHora.setText(format.format(now));
+//            }
+//        });
+//        timer.start();
 
         JLabel lblLogin = new JLabel("Login");
         lblLogin.setFont(new Font("SansSerif", Font.BOLD, 40));
@@ -57,7 +75,7 @@ public class Ventana extends JFrame{
 
         JLabel lblCorreo = new JLabel("Ingrese Su Correo");
         lblCorreo.setFont(new Font("SansSerif", Font.BOLD, 20));
-        lblCorreo.setForeground(Color.decode("#FFFFFF"));
+        lblCorreo.setForeground(Color.decode("#C2501"));
         lblCorreo.setSize(200,50);
         lblCorreo.setLocation(365,170);
         deco1.add(lblCorreo);
@@ -70,9 +88,9 @@ public class Ventana extends JFrame{
 
         JLabel lblPass = new JLabel("Ingrese Su Contraseña");
         lblPass.setFont(new Font("SansSerif", Font.BOLD, 20));
-        lblPass.setForeground(Color.decode("#FFFFFF"));
+        lblPass.setForeground(Color.decode("#C2501"));
         lblPass.setSize(350,50);
-        lblPass.setLocation(350,315);
+        lblPass.setLocation(1,315);
         deco1.add(lblPass);
 
         JPasswordField campoPass = new JPasswordField();
