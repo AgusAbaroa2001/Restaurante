@@ -2,10 +2,16 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Utilities;
 
 public class Ventana extends JFrame{
     public JPanel panel;
@@ -416,6 +422,52 @@ public class Ventana extends JFrame{
         subfondo.add(tituloCrear);
 
         JLabel nombre = new JLabel("Nombre");
+        nombre.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 30));
+        nombre.setSize(150,40);
+        nombre.setLocation(70,90);
+        nombre.setForeground(Color.decode("#E96241"));
+        subfondo.add(nombre);
+
+        JTextField txtNombre = new JTextField();
+        txtNombre.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 20));
+        txtNombre.setSize(250,30);
+        txtNombre.setLocation(70,140);
+        subfondo.add(txtNombre);
+
+        JLabel desc = new JLabel("Descripcion");
+        desc.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 30));
+        desc.setSize(250,40);
+        desc.setLocation(70,190);
+        desc.setForeground(Color.decode("#E96241"));
+        subfondo.add(desc);
+
+        JTextArea txtDesc = new JTextArea(10,20);
+        txtDesc.setLineWrap(true);
+        txtDesc.setWrapStyleWord(true);
+        txtDesc.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(txtDesc.getText().length()>=100){
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
+        txtDesc.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 20));
+        txtDesc.setSize(350,90);
+        txtDesc.setLocation(70,240);
+        subfondo.add(txtDesc);
+
+        JComboBox categoria = new JComboBox();
 
 
 
