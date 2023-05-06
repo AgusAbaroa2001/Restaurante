@@ -93,7 +93,7 @@ public class Ventana extends JFrame{
         btnLogin.setText("Iniciar Sesion");
         btnLogin.setFocusPainted(false);
         btnLogin.setBackground(Color.decode("#F36B31"));
-        btnLogin.setForeground(Color.decode("#FFFFFF"));
+        btnLogin.setForeground(Color.decode("#C2501F"));
         btnLogin.repaint();
         btnLogin.revalidate();
 
@@ -123,7 +123,7 @@ public class Ventana extends JFrame{
                             nombreUser=data[0];
                             correoUser=data[2];
 
-                            JOptionPane.showMessageDialog(null, "Bienvenido "+ nombreUser,"INGRESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Bienvenido "+ nombreUser,"Inicio con exito", JOptionPane.INFORMATION_MESSAGE);
                             actualizarPanel(1);
 
                             validacion = true;
@@ -161,14 +161,37 @@ public class Ventana extends JFrame{
         deco4.revalidate();
         inicio.add(deco4);
 
-        JLabel platos = new JLabel("Platillos");
-        platos.setSize(200,200);
-        platos.setLocation(150,80);
-        inicio.add(platos);
+        JLabel in = new JLabel("Inicio");
+        in.setFont(new Font("Verdana", Font.BOLD, 60));
+        in.setForeground(Color.decode("#923914"));
+        in.setSize(350,100);
+        in.setLocation(50,25);
+        deco4.add(in);
 
-        JButton consulta = new JButton("Consultar");
-        consulta.setSize(100,30);
-        consulta.setLocation(170,180);
+        JLabel platos = new JLabel("Platillos");
+        platos.setFont(new Font("Verdana", Font.BOLD, 20));
+        platos.setForeground(Color.decode("#C2501F"));
+        platos.setSize(350,50);
+        platos.setLocation(50,170);
+        deco4.add(platos);
+
+        JLabel ordenes = new JLabel("Ordenes");
+        ordenes.setFont(new Font("Verdana", Font.BOLD, 20));
+        ordenes.setForeground(Color.decode("#C2501F"));
+        ordenes.setSize(350,50);
+        ordenes.setLocation(450,170);
+        deco4.add(ordenes);
+
+        JButton consulta = new JButton();
+        consulta.setFont(new Font("Verdana", Font.BOLD, 20));
+        consulta.setSize(250, 40);
+        consulta.setLocation(50, 250);
+        consulta.setText("Consultar");
+        consulta.setFocusPainted(false);
+        consulta.setBackground(Color.decode("#F36B31"));
+        consulta.setForeground(Color.decode("#C2501F"));
+        consulta.repaint();
+        consulta.revalidate();
         consulta.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -177,10 +200,16 @@ public class Ventana extends JFrame{
             }
         });
 
-        JButton crear = new JButton("Crear");
-        crear.setSize(100,30);
-        crear.setLocation(170,80);
-
+        JButton crear = new JButton();
+        crear.setFont(new Font("Verdana", Font.BOLD, 20));
+        crear.setSize(250, 40);
+        crear.setLocation(50, 350);
+        crear.setText("Crear");
+        crear.setFocusPainted(false);
+        crear.setBackground(Color.decode("#F36B31"));
+        crear.setForeground(Color.decode("#C2501F"));
+        crear.repaint();
+        crear.revalidate();
 
         crear.addActionListener(new ActionListener() {
             @Override
@@ -189,17 +218,43 @@ public class Ventana extends JFrame{
             }
         });
 
-        inicio.add(consulta);
+        deco4.add(consulta);
+        deco4.add(crear);
 
-        JLabel ordenes = new JLabel("Ordenes");
-        ordenes.setSize(200,200);
-        ordenes.setLocation(350,80);
-        inicio.add(ordenes);
 
-        JButton consulta1 = new JButton("Consultar");
-        consulta1.setSize(100,50);
-        consulta1.setLocation(150,380);
-        inicio.add(consulta1);
+
+
+        JButton consulta1 = new JButton();
+        consulta1.setFont(new Font("Verdana", Font.BOLD, 20));
+        consulta1.setSize(250, 40);
+        consulta1.setLocation(450, 250);
+        consulta1.setText("Consultar");
+        consulta1.setFocusPainted(false);
+        consulta1.setBackground(Color.decode("#F36B31"));
+        consulta1.setForeground(Color.decode("#C2501F"));
+        consulta1.repaint();
+        consulta1.revalidate();
+        deco4.add(consulta1);
+
+        JButton crear1 = new JButton();
+        crear1.setFont(new Font("Verdana", Font.BOLD, 20));
+        crear1.setSize(250, 40);
+        crear1.setLocation(450, 350);
+        crear1.setText("Crear");
+        crear1.setFocusPainted(false);
+        crear1.setBackground(Color.decode("#F36B31"));
+        crear1.setForeground(Color.decode("#C2501F"));
+        crear1.repaint();
+        crear1.revalidate();
+
+        crear1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        deco4.add(crear1);
 
 
         return inicio;
@@ -226,7 +281,7 @@ public class Ventana extends JFrame{
         JLabel comida1 = new JLabel("Tacos");
         comida1.setSize(100,30);
         comida1.setLocation(150,80);
-        consultaScreen.add(comida1);
+        deco3.add(comida1);
 
         JButton crear = new JButton("Crear Pedido");
         crear.setSize(150,30);
@@ -276,13 +331,13 @@ public class Ventana extends JFrame{
         JLabel crear1 = new JLabel("Creacion de Platillo");
         crear1.setSize(150,100);
         crear1.setLocation(250,40);
-        creacion.add(crear1);
+        deco2.add(crear1);
 
         JLabel name = new JLabel("Nombre ");
         name.setSize(400,40);
         name.setLocation(70,150);
         name.setFont(new Font("Helvetica", Font.BOLD, 40));
-        creacion.add(name);
+        deco2.add(name);
 
         return creacion;
     }
