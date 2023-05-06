@@ -54,43 +54,47 @@ public class Ventana extends JFrame{
 
 
         JLabel lblLogin = new JLabel("Login");
-            lblLogin.setFont(new Font("Verdana", Font.BOLD, 60));
+            lblLogin.setFont(new Font("Verdana", Font.BOLD, 50));
         lblLogin.setForeground(Color.decode("#923914"));
         lblLogin.setSize(350,100);
-        lblLogin.setLocation(50,25);
+        lblLogin.setLocation(350,130);
         deco1.add(lblLogin);
 
-        JLabel lblCorreo = new JLabel("Ingrese Su Correo");
+        JLabel lblCorreo = new JLabel("Ingrese Su Correo:");
         lblCorreo.setFont(new Font("Verdana", Font.BOLD, 20));
         lblCorreo.setForeground(Color.decode("#C2501F"));
         lblCorreo.setSize(350,50);
-        lblCorreo.setLocation(50,170);
+        lblCorreo.setLocation(200,220);
         deco1.add(lblCorreo);
 
         JTextField campoCorreo = new JTextField();
         campoCorreo.setFont(new Font("Verdana", Font.BOLD, 15));
-        campoCorreo.setSize(350,50);
-        campoCorreo.setLocation(50,225);
+        campoCorreo.setBackground(Color.decode("#EDD06C"));
+        campoCorreo.setSize(450,50);
+        campoCorreo.setLocation(200,270);
+        campoCorreo.repaint();
         deco1.add(campoCorreo);
 
-        JLabel lblPass = new JLabel("Ingrese Su Contraseña");
+        JLabel lblPass = new JLabel("Ingrese Su Contraseña:");
         lblPass.setFont(new Font("Verdana", Font.BOLD, 20));
         lblPass.setForeground(Color.decode("#C2501F"));
         lblPass.setSize(500,50);
-        lblPass.setLocation(50,315);
+        lblPass.setLocation(200,315);
         deco1.add(lblPass);
 
         JPasswordField campoPass = new JPasswordField();
-        campoPass.setSize(350,50);
+        campoPass.setSize(450,50);
         campoPass.setFont(new Font("Verdana", Font.BOLD, 20));
-        campoPass.setLocation(50,375);
+        campoPass.setBackground(Color.decode("#EDD06C"));
+        campoPass.setLocation(200,375);
+        campoPass.repaint();
         deco1.add(campoPass);
 
         JButton btnLogin = new JButton();
         btnLogin.setFont(new Font("Verdana", Font.BOLD, 20));
         btnLogin.setSize(250, 40);
-        btnLogin.setLocation(150, 480);
-        btnLogin.setText("Iniciar Sesion");
+        btnLogin.setLocation(300, 480);
+        btnLogin.setText("Acceder");
         btnLogin.setFocusPainted(false);
         btnLogin.setBackground(Color.decode("#F36B31"));
         btnLogin.setForeground(Color.decode("#C2501F"));
