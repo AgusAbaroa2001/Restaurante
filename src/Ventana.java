@@ -149,8 +149,17 @@ public class Ventana extends JFrame{
 
         JPanel inicio = new JPanel();
         inicio.setSize(this.getWidth(),this.getHeight());
-        inicio.setBackground(Color.decode("#D7751E"));
+        inicio.setBackground(Color.decode("#F46B31"));
         inicio.setLayout(null);
+
+        JPanel deco4 = new JPanel();
+        deco4.setBackground(Color.decode("#FFF6A9"));
+        deco4.setSize(850,600);
+        deco4.setLocation(20, 25);
+        deco4.setLayout(null);
+        deco4.repaint();
+        deco4.revalidate();
+        inicio.add(deco4);
 
         JLabel platos = new JLabel("Platillos");
         platos.setSize(200,200);
@@ -201,8 +210,18 @@ public class Ventana extends JFrame{
     public JPanel consultaPlatillo(){
 
         JPanel consultaScreen = new JPanel();
+        consultaScreen.setBackground(Color.decode("#F46B31"));
         consultaScreen.setSize(this.getWidth(),this.getHeight());
         consultaScreen.setLayout(null);
+
+        JPanel deco3 = new JPanel();
+        deco3.setBackground(Color.decode("#FFF6A9"));
+        deco3.setSize(850,600);
+        deco3.setLocation(20, 25);
+        deco3.setLayout(null);
+        deco3.repaint();
+        deco3.revalidate();
+        consultaScreen.add(deco3);
 
         JLabel comida1 = new JLabel("Tacos");
         comida1.setSize(100,30);
@@ -241,8 +260,18 @@ public class Ventana extends JFrame{
     //------------------creacion de platillos-----------------------
     public JPanel CrearPlatillo(){
         JPanel creacion = new JPanel();
+        creacion.setBackground(Color.decode("#F46B31"));
         creacion.setSize(this.getWidth(),this.getHeight());
         creacion.setLayout(null);
+
+        JPanel deco2 = new JPanel();
+        deco2.setBackground(Color.decode("#FFF6A9"));
+        deco2.setSize(850,600);
+        deco2.setLocation(20, 25);
+        deco2.setLayout(null);
+        deco2.repaint();
+        deco2.revalidate();
+        creacion.add(deco2);
 
         JLabel crear1 = new JLabel("Creacion de Platillo");
         crear1.setSize(150,100);
