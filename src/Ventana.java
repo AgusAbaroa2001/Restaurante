@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.text.SimpleDateFormat;
 
 import javax.swing.*;
 
@@ -32,6 +31,37 @@ public class Ventana extends JFrame{
 
         this.revalidate();
         this.setVisible(true);
+    }
+    // -------------------------------MenuBar-------------------------------
+    public void menu(JPanel panelActual){
+        JMenuBar menuA = new JMenuBar();
+        menuA.setLocation(0,0);
+        menuA.setSize(900,20);
+        
+        JMenu menu1 = new JMenu("Menu");
+
+        JMenuItem item1 = new JMenuItem("Inicio");
+        JMenuItem item2 = new JMenuItem("Cerrar Sesion");
+
+        item1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarPanel(1);
+            }
+        });
+
+        item2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarPanel(4);
+            }
+        });
+
+        menu1.add(item1);
+        menu1.add(item2);
+        menuA.add(menu1);
+        panelActual.add(menuA);
+
     }
 
     //-------------------------------pantalla de login--------------------------------
@@ -156,9 +186,11 @@ public class Ventana extends JFrame{
                     if (validacion == false){
                         JOptionPane.showMessageDialog(null, "El usuario y contraseña no coindicen","Error!", JOptionPane.ERROR_MESSAGE);
                     }
+                    BR.close();
 
                 }catch(Exception f){
                     System.err.println("No se encontro archivo");
+                    
                 }
             }
         });
@@ -174,28 +206,9 @@ public class Ventana extends JFrame{
         inicio.setSize(this.getWidth(),this.getHeight());
         inicio.setBackground(Color.decode("#E96241"));
         inicio.setLayout(null);
-
-        JMenuBar menuA = new JMenuBar();
-        menuA.setLocation(0,0);
-        menuA.setSize(900,20);
-
-        JMenu menu1 = new JMenu("Menu");
-        JMenuItem item1 = new JMenuItem("Inicio");
-        JMenuItem item2 = new JMenuItem("Cerrar Sesion");
-
-        item2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                actualizarPanel(4);
-            }
-        });
-
-        menu1.add(item1);
-        menu1.add(item2);
-        menuA.add(menu1);
-
-        inicio.add(menuA);
-
+       
+        // barra menu
+        menu(inicio); 
 
         //--------panel de platillos----------
         JPanel plato = new JPanel();
@@ -264,6 +277,7 @@ public class Ventana extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 actualizarPanel(2);
+                
 
             }
         });
@@ -324,12 +338,15 @@ public class Ventana extends JFrame{
 
     //---------------aqui es la pantalla de consulta en la seccion platillos-----------------
     public JPanel consultaPlatillo(){
-
+        
         JPanel consultaScreen = new JPanel();
         consultaScreen.setBackground(Color.decode("#F46B31"));
         consultaScreen.setSize(this.getWidth(),this.getHeight());
         consultaScreen.setLayout(null);
-
+        
+        //Bar menu
+        menu(consultaScreen); //menu
+        
         JPanel deco3 = new JPanel();
         deco3.setBackground(Color.decode("#FFF6A9"));
         deco3.setSize(850,600);
@@ -366,10 +383,10 @@ public class Ventana extends JFrame{
             }
         });
 
-        consultaScreen.add(atras);
-        consultaScreen.add(crear);
+        deco3.add(atras);
+        deco3.add(crear);
 
-
+        
         return consultaScreen;
     }
 
@@ -381,24 +398,8 @@ public class Ventana extends JFrame{
         fondo.setSize(this.getWidth(),this.getHeight());
         fondo.setLayout(null);
 
-        //menu
-        JMenuBar menuA = new JMenuBar();
-        menuA.setLocation(0,0);
-        menuA.setSize(900,20);
-
-        JMenu menu1 = new JMenu("Menu");
-        JMenuItem item1 = new JMenuItem("Inicio");
-        JMenuItem item2 = new JMenuItem("Cerrar Sesion");
-        item2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                actualizarPanel(4);
-            }
-        });
-        menu1.add(item1);
-        menu1.add(item2);
-        menuA.add(menu1);
-        fondo.add(menuA);
+        //Bar menu
+        menu(fondo);
 
         JPanel subfondo = new JPanel();
         subfondo.setBackground(Color.decode("#383952"));
@@ -441,6 +442,7 @@ public class Ventana extends JFrame{
             case 2:
                 panel = consultaPlatillo();
                 this.add(panel);
+                
                 break;
             case 3:
                 panel = CrearPlatillo();
