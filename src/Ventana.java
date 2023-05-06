@@ -39,65 +39,84 @@ public class Ventana extends JFrame{
 
         JPanel login = new JPanel();
         login.setSize(this.getWidth(), this.getHeight());
-        login.setBackground(Color.decode("#F46B31"));
+        login.setBackground(Color.decode("#E96241"));
         login.setLocation(0, 0);
         login.setLayout(null);
 
         JPanel deco1 = new JPanel();
-        deco1.setBackground(Color.decode("#FFF6A9"));
-        deco1.setSize(850,600);
-        deco1.setLocation(20, 25);
+        deco1.setBackground(Color.decode("#383952"));
+        deco1.setSize(450,500);
+        deco1.setLocation(350, 100);
         deco1.setLayout(null);
         deco1.repaint();
         deco1.revalidate();
         login.add(deco1);
 
+        JPanel deco2 = new JPanel();
+        deco2.setBackground(Color.decode("#FFFFFF"));
+        deco2.setSize(260,500);
+        deco2.setLocation(90,100);
+        deco2.setLayout(null);
+        login.add(deco2);
 
-        JLabel lblLogin = new JLabel("Login");
-            lblLogin.setFont(new Font("Verdana", Font.BOLD, 50));
-        lblLogin.setForeground(Color.decode("#923914"));
-        lblLogin.setSize(350,100);
-        lblLogin.setLocation(350,130);
+        JLabel imageEats = new JLabel(new ImageIcon("logo (2).png"));
+        imageEats.setLocation(0,150);
+        imageEats.setSize(227,150);
+        deco2.add(imageEats);
+
+        JLabel welcum = new JLabel("Bienvenido");
+        welcum.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 30));
+        welcum.setForeground(Color.decode("#E96241"));
+        welcum.setSize(250,70);
+        welcum.setLocation(35,280);
+        deco2.add(welcum);
+
+
+        JLabel lblLogin = new JLabel("Iniciar Sesion");
+        lblLogin.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 30));
+        lblLogin.setForeground(Color.decode("#E96241"));
+        lblLogin.setSize(400,100);
+        lblLogin.setLocation(120,30);
         deco1.add(lblLogin);
 
-        JLabel lblCorreo = new JLabel("Ingrese Su Correo:");
-        lblCorreo.setFont(new Font("Verdana", Font.BOLD, 20));
-        lblCorreo.setForeground(Color.decode("#C2501F"));
-        lblCorreo.setSize(350,50);
-        lblCorreo.setLocation(200,220);
+        JLabel lblCorreo = new JLabel("Correo:");
+        lblCorreo.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 20));
+        lblCorreo.setForeground(Color.decode("#FFFFFF"));
+        lblCorreo.setSize(250,50);
+        lblCorreo.setLocation(50,120);
         deco1.add(lblCorreo);
 
         JTextField campoCorreo = new JTextField();
-        campoCorreo.setFont(new Font("Verdana", Font.BOLD, 15));
-        campoCorreo.setBackground(Color.decode("#EDD06C"));
-        campoCorreo.setSize(450,50);
-        campoCorreo.setLocation(200,270);
+        campoCorreo.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 15));
+        campoCorreo.setBackground(Color.decode("#FFFFFF"));
+        campoCorreo.setSize(290,40);
+        campoCorreo.setLocation(50,170);
         campoCorreo.repaint();
         deco1.add(campoCorreo);
 
-        JLabel lblPass = new JLabel("Ingrese Su Contraseña:");
-        lblPass.setFont(new Font("Verdana", Font.BOLD, 20));
-        lblPass.setForeground(Color.decode("#C2501F"));
-        lblPass.setSize(500,50);
-        lblPass.setLocation(200,315);
+        JLabel lblPass = new JLabel("Contraseña:");
+        lblPass.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 20));
+        lblPass.setForeground(Color.decode("#FFFFFF"));
+        lblPass.setSize(250,50);
+        lblPass.setLocation(50,250);
         deco1.add(lblPass);
 
         JPasswordField campoPass = new JPasswordField();
-        campoPass.setSize(450,50);
-        campoPass.setFont(new Font("Verdana", Font.BOLD, 20));
-        campoPass.setBackground(Color.decode("#EDD06C"));
-        campoPass.setLocation(200,375);
+        campoPass.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 20));
+        campoPass.setBackground(Color.decode("#FFFFFF"));
+        campoPass.setSize(290,40);
+        campoPass.setLocation(50,300);
         campoPass.repaint();
         deco1.add(campoPass);
 
         JButton btnLogin = new JButton();
-        btnLogin.setFont(new Font("Verdana", Font.BOLD, 20));
-        btnLogin.setSize(250, 40);
-        btnLogin.setLocation(300, 480);
+        btnLogin.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 20));
+        btnLogin.setSize(200, 40);
+        btnLogin.setLocation(100, 380);
         btnLogin.setText("Acceder");
         btnLogin.setFocusPainted(false);
         btnLogin.setBackground(Color.decode("#F36B31"));
-        btnLogin.setForeground(Color.decode("#C2501F"));
+        btnLogin.setForeground(Color.decode("#FFFFFF"));
         btnLogin.repaint();
         btnLogin.revalidate();
 
@@ -153,47 +172,92 @@ public class Ventana extends JFrame{
 
         JPanel inicio = new JPanel();
         inicio.setSize(this.getWidth(),this.getHeight());
-        inicio.setBackground(Color.decode("#F46B31"));
+        inicio.setBackground(Color.decode("#E96241"));
         inicio.setLayout(null);
 
-        JPanel deco4 = new JPanel();
-        deco4.setBackground(Color.decode("#FFF6A9"));
-        deco4.setSize(850,600);
-        deco4.setLocation(20, 25);
-        deco4.setLayout(null);
-        deco4.repaint();
-        deco4.revalidate();
-        inicio.add(deco4);
+        JMenuBar menuA = new JMenuBar();
+        menuA.setLocation(0,0);
+        menuA.setSize(900,20);
 
-        JLabel in = new JLabel("Inicio");
-        in.setFont(new Font("Verdana", Font.BOLD, 60));
-        in.setForeground(Color.decode("#923914"));
-        in.setSize(350,100);
-        in.setLocation(50,25);
-        deco4.add(in);
+        JMenu menu1 = new JMenu("Menu");
+        JMenuItem item1 = new JMenuItem("Inicio");
+        JMenuItem item2 = new JMenuItem("Cerrar Sesion");
 
-        JLabel platos = new JLabel("Platillos");
-        platos.setFont(new Font("Verdana", Font.BOLD, 20));
-        platos.setForeground(Color.decode("#C2501F"));
-        platos.setSize(350,50);
-        platos.setLocation(50,170);
-        deco4.add(platos);
+        item2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarPanel(4);
+            }
+        });
 
-        JLabel ordenes = new JLabel("Ordenes");
-        ordenes.setFont(new Font("Verdana", Font.BOLD, 20));
-        ordenes.setForeground(Color.decode("#C2501F"));
-        ordenes.setSize(350,50);
-        ordenes.setLocation(450,170);
-        deco4.add(ordenes);
+        menu1.add(item1);
+        menu1.add(item2);
+        menuA.add(menu1);
 
-        JButton consulta = new JButton();
-        consulta.setFont(new Font("Verdana", Font.BOLD, 20));
+        inicio.add(menuA);
+
+
+        //--------panel de platillos----------
+        JPanel plato = new JPanel();
+        plato.setBackground(Color.decode("#383952"));
+        plato.setSize(350,442);
+        plato.setLocation(60, 120);
+        plato.setLayout(null);
+        plato.repaint();
+        plato.revalidate();
+        inicio.add(plato);
+
+        JLabel imageTenedor = new JLabel(new ImageIcon("iconoTenedor.png"));
+        imageTenedor.setLocation(50,30);
+        imageTenedor.setSize(250,300);
+        plato.add(imageTenedor);
+
+
+
+        //--------panel de ordenes--------------
+        JPanel orden = new JPanel();
+        orden.setBackground(Color.decode("#383952"));
+        orden.setSize(350,442);
+        orden.setLocation(500, 120);
+        orden.setLayout(null);
+        orden.repaint();
+        orden.revalidate();
+        inicio.add(orden);
+
+        JLabel imageNota = new JLabel(new ImageIcon("iconoNota.png"));
+        imageNota.setLocation(50,30);
+        imageNota.setSize(250,300);
+        orden.add(imageNota);
+
+        JLabel titulo = new JLabel("Inicio");
+        titulo.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 60));
+        titulo.setForeground(Color.decode("#FFFFFF"));
+        titulo.setSize(350,100);
+        titulo.setLocation(380,25);
+        inicio.add(titulo);
+
+        JLabel tituloOrden = new JLabel("Ordenes");
+        tituloOrden.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 40));
+        tituloOrden.setForeground(Color.decode("#FFFFFF"));
+        tituloOrden.setSize(350,50);
+        tituloOrden.setLocation(105,20);
+        orden.add(tituloOrden);
+
+        JLabel tituloPlato = new JLabel("Platillos");
+        tituloPlato.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 40));
+        tituloPlato.setForeground(Color.decode("#FFFFFF"));
+        tituloPlato.setSize(350,50);
+        tituloPlato.setLocation(105,20);
+        plato.add(tituloPlato);
+
+//-------------boton consulta de platillo----------------------
+        JButton consulta = new JButton("Consultar");
+        consulta.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 20));
         consulta.setSize(250, 40);
-        consulta.setLocation(50, 250);
-        consulta.setText("Consultar");
+        consulta.setLocation(50, 280);
         consulta.setFocusPainted(false);
-        consulta.setBackground(Color.decode("#F36B31"));
-        consulta.setForeground(Color.decode("#C2501F"));
+        consulta.setBackground(Color.decode("#E96241"));
+        consulta.setForeground(Color.decode("#FFFFFF"));
         consulta.repaint();
         consulta.revalidate();
         consulta.addActionListener(new ActionListener() {
@@ -204,61 +268,54 @@ public class Ventana extends JFrame{
             }
         });
 
-        JButton crear = new JButton();
-        crear.setFont(new Font("Verdana", Font.BOLD, 20));
+        //-----------------boton crear de platillo-------------------------
+        JButton crear = new JButton("Crear");
+        crear.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 20));
         crear.setSize(250, 40);
         crear.setLocation(50, 350);
-        crear.setText("Crear");
         crear.setFocusPainted(false);
-        crear.setBackground(Color.decode("#F36B31"));
-        crear.setForeground(Color.decode("#C2501F"));
+        crear.setBackground(Color.decode("#E96241"));
+        crear.setForeground(Color.decode("#FFFFFF"));
         crear.repaint();
         crear.revalidate();
 
         crear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                actualizarPanel(3);
 
             }
         });
 
-        deco4.add(consulta);
-        deco4.add(crear);
+
+        //----------------boton consulta ordenes------------------------
+        JButton consultaOrden = new JButton("Consultar");
+        consultaOrden.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 20));
+        consultaOrden.setSize(250, 40);
+        consultaOrden.setLocation(50, 280);
+        consultaOrden.setFocusPainted(false);
+        consultaOrden.setBackground(Color.decode("#E96241"));
+        consultaOrden.setForeground(Color.decode("#FFFFFF"));
+        consultaOrden.repaint();
+        consultaOrden.revalidate();
+
+        //-------------------boton crear ordenes--------------------
+        JButton crearOrden = new JButton("Crear");
+        crearOrden.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 20));
+        crearOrden.setSize(250, 40);
+        crearOrden.setLocation(50, 350);
+        crearOrden.setFocusPainted(false);
+        crearOrden.setBackground(Color.decode("#E96241"));
+        crearOrden.setForeground(Color.decode("#FFFFFF"));
+        crearOrden.repaint();
+        crearOrden.revalidate();
 
 
-
-
-        JButton consulta1 = new JButton();
-        consulta1.setFont(new Font("Verdana", Font.BOLD, 20));
-        consulta1.setSize(250, 40);
-        consulta1.setLocation(450, 250);
-        consulta1.setText("Consultar");
-        consulta1.setFocusPainted(false);
-        consulta1.setBackground(Color.decode("#F36B31"));
-        consulta1.setForeground(Color.decode("#C2501F"));
-        consulta1.repaint();
-        consulta1.revalidate();
-        deco4.add(consulta1);
-
-        JButton crear1 = new JButton();
-        crear1.setFont(new Font("Verdana", Font.BOLD, 20));
-        crear1.setSize(250, 40);
-        crear1.setLocation(450, 350);
-        crear1.setText("Crear");
-        crear1.setFocusPainted(false);
-        crear1.setBackground(Color.decode("#F36B31"));
-        crear1.setForeground(Color.decode("#C2501F"));
-        crear1.repaint();
-        crear1.revalidate();
-
-        crear1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
-        deco4.add(crear1);
+//------------agregar botones a paneles---------------------
+        plato.add(consulta);
+        plato.add(crear);
+        orden.add(consultaOrden);
+        orden.add(crearOrden);
 
 
         return inicio;
@@ -318,32 +375,50 @@ public class Ventana extends JFrame{
 
     //------------------creacion de platillos-----------------------
     public JPanel CrearPlatillo(){
-        JPanel creacion = new JPanel();
-        creacion.setBackground(Color.decode("#F46B31"));
-        creacion.setSize(this.getWidth(),this.getHeight());
-        creacion.setLayout(null);
 
-        JPanel deco2 = new JPanel();
-        deco2.setBackground(Color.decode("#FFF6A9"));
-        deco2.setSize(850,600);
-        deco2.setLocation(20, 25);
-        deco2.setLayout(null);
-        deco2.repaint();
-        deco2.revalidate();
-        creacion.add(deco2);
+        JPanel fondo = new JPanel();
+        fondo.setBackground(Color.decode("#E96241"));
+        fondo.setSize(this.getWidth(),this.getHeight());
+        fondo.setLayout(null);
 
-        JLabel crear1 = new JLabel("Creacion de Platillo");
-        crear1.setSize(150,100);
-        crear1.setLocation(250,40);
-        deco2.add(crear1);
+        //menu
+        JMenuBar menuA = new JMenuBar();
+        menuA.setLocation(0,0);
+        menuA.setSize(900,20);
 
-        JLabel name = new JLabel("Nombre ");
-        name.setSize(400,40);
-        name.setLocation(70,150);
-        name.setFont(new Font("Helvetica", Font.BOLD, 40));
-        deco2.add(name);
+        JMenu menu1 = new JMenu("Menu");
+        JMenuItem item1 = new JMenuItem("Inicio");
+        JMenuItem item2 = new JMenuItem("Cerrar Sesion");
+        item2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarPanel(4);
+            }
+        });
+        menu1.add(item1);
+        menu1.add(item2);
+        menuA.add(menu1);
+        fondo.add(menuA);
 
-        return creacion;
+        JPanel subfondo = new JPanel();
+        subfondo.setBackground(Color.decode("#383952"));
+        subfondo.setSize(810,600);
+        subfondo.setLocation(40,30);
+        subfondo.setLayout(null);
+        fondo.add(subfondo);
+
+        JLabel tituloCrear = new JLabel("Crear Platillo");
+        tituloCrear.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 50));
+        tituloCrear.setSize(500,50);
+        tituloCrear.setLocation(30,10);
+        tituloCrear.setForeground(Color.decode("#FFFFFF"));
+        subfondo.add(tituloCrear);
+
+        JLabel nombre = new JLabel("Nombre");
+
+
+
+        return fondo;
     }
 
 
@@ -369,6 +444,10 @@ public class Ventana extends JFrame{
                 break;
             case 3:
                 panel = CrearPlatillo();
+                this.add(panel);
+                break;
+            case 4:
+                panel=login();
                 this.add(panel);
                 break;
         }
