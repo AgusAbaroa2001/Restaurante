@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class ElementoPanelOrden extends JPanel{
+    JButton btninfo;
 	Color naranja= new Color(233,98,65);
 	Color azul= new Color(56,57,82);
 	JPanel elemento;
@@ -78,7 +79,7 @@ public class ElementoPanelOrden extends JPanel{
         lblNombre.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 20));
         lblNombre.setPreferredSize(new Dimension(200, 20)); // Establece tamaño preferido en lugar de setSize() para cuando se usan layouts
         
-        JButton btninfo= new JButton("i");
+        btninfo= new JButton("i");
         btninfo.setBackground(naranja);
         btninfo.setForeground(Color.white);
         btninfo.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 15));
@@ -142,4 +143,8 @@ public class ElementoPanelOrden extends JPanel{
         elemento.add(pCentro,BorderLayout.CENTER);
         elemento.add(pAbajo,BorderLayout.SOUTH);
 	}
+
+    public JButton getbtnInfo(){
+        return btninfo;
+    }
 }

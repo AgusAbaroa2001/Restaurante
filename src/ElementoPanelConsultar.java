@@ -23,6 +23,8 @@ public class ElementoPanelConsultar extends JPanel{
 	float precio;
 	String rutaImagen;
 	 //imagenOriginal;
+    JButton btnEliminar;
+    JButton btnVer;
 	
 	public ElementoPanelConsultar(String nombre, String ruta,float precio) {
 		rutaImagen=ruta;
@@ -47,27 +49,28 @@ public class ElementoPanelConsultar extends JPanel{
     	// --- panel centro
         JPanel pCentro= new JPanel(new BorderLayout()); 
         pCentro.setBackground(Color.white);
+
         // redimensionar foto
         ImageIcon imagenOriginal = new ImageIcon(ruta);
         Image imagen = imagenOriginal.getImage();
         Image imagenRedimensionada = imagen.getScaledInstance(200, 150, Image.SCALE_SMOOTH);
         ImageIcon imagenRedimensionadaIcon = new ImageIcon(imagenRedimensionada);
         JLabel lblimagen = new JLabel(imagenRedimensionadaIcon);
-         
+
+        pCentro.add(lblimagen,BorderLayout.CENTER); 
         
         lblNombre = new JLabel(nombrePlatillo,JLabel.CENTER);
         lblNombre.setForeground(naranja);
         lblNombre.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 20));
         lblNombre.setPreferredSize(new Dimension(200, 20)); // Establecemos tamaño preferido en lugar de setSize()
         
+        elemento.add(lblNombre,BorderLayout.NORTH);
        
         price = new JLabel("$"+precio+" MXN",JLabel.CENTER);
         price.setForeground(naranja);
         price.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 20));
         price.setPreferredSize(new Dimension(66, 20)); 
         
-        pCentro.add(lblimagen,BorderLayout.CENTER);
-        elemento.add(lblNombre,BorderLayout.NORTH);
         pCentro.add(price,BorderLayout.SOUTH);
         
         
@@ -75,13 +78,13 @@ public class ElementoPanelConsultar extends JPanel{
         JPanel pBotones= new JPanel(new FlowLayout( 0, 35, 10)); 
         pBotones.setBackground(Color.white);
         
-        JButton btnEliminar= new JButton("Eliminar");
+        btnEliminar= new JButton("Eliminar");
         btnEliminar.setBackground(naranja);
         btnEliminar.setForeground(Color.white);
         btnEliminar.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 15));
         btnEliminar.setFocusPainted(false);
         
-        JButton btnVer= new JButton("Ver");
+        btnVer= new JButton("Ver");
         btnVer.setPreferredSize(new Dimension(75,30));
         btnVer.setBackground(naranja);
         btnVer.setForeground(Color.white);
@@ -94,4 +97,11 @@ public class ElementoPanelConsultar extends JPanel{
         elemento.add(pCentro,BorderLayout.CENTER);
         elemento.add(pBotones,BorderLayout.SOUTH);
 	}
+
+    public JButton getBtnVer(){
+        return btnVer;
+    }
+    public JButton getBtnEliminar(){
+        return btnEliminar;
+    }
 }
