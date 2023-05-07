@@ -1,5 +1,8 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -8,26 +11,27 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
+//import javax.swing.event.DocumentEvent;
+//import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Utilities;
+//import javax.swing.text.BadLocationException;
+//import javax.swing.text.Utilities;
 
 public class Ventana extends JFrame{
     public JPanel panel;
     public String nombreUser;
     public String correoUser;
-
+    Color naranja= new Color(233,98,65);
+	Color azul= new Color(56,57,82);
     public int anterior;
     public int actual;
 
     public Ventana() {
         this.setSize(900,700); // medidas provisionales, se pueden cambiar
         this.setLocationRelativeTo(null);
-        this.setTitle("Restaurante menu");
+        this.setTitle("Gourmet Eats");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(null);
+       // this.setLayout(null);
         this.setResizable(false);
 
         panel= login(); // panel  principal
@@ -53,14 +57,14 @@ public class Ventana extends JFrame{
         item1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                actualizarPanel(1);
+                actualizarPanel(2);
             }
         });
 
         item2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                actualizarPanel(4);
+                actualizarPanel(1);
             }
         });
 
@@ -184,7 +188,7 @@ public class Ventana extends JFrame{
                             correoUser=data[2];
 
                             JOptionPane.showMessageDialog(null, "Bienvenido "+ nombreUser,"Inicio con exito", JOptionPane.INFORMATION_MESSAGE);
-                            actualizarPanel(1);
+                            actualizarPanel(2);
 
                             validacion = true;
 
@@ -270,7 +274,7 @@ public class Ventana extends JFrame{
         tituloPlato.setLocation(105,20);
         plato.add(tituloPlato);
 
-//boton consulta de platillo
+        //boton consulta de platillo
         JButton consulta = new JButton("Consultar");
         consulta.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 20));
         consulta.setSize(250, 40);
@@ -283,7 +287,7 @@ public class Ventana extends JFrame{
         consulta.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                actualizarPanel(2);
+                actualizarPanel(4);
                 
 
             }
@@ -320,7 +324,7 @@ public class Ventana extends JFrame{
         consultaOrden.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                actualizarPanel(8);
+                actualizarPanel(9);
             }
         });
 
@@ -345,7 +349,7 @@ public class Ventana extends JFrame{
         crearOrden.revalidate();
 
 
-//agregar botones a paneles
+        //agregar botones a paneles
         plato.add(consulta);
         plato.add(crear);
         orden.add(consultaOrden);
@@ -491,6 +495,7 @@ public class Ventana extends JFrame{
         fotobtn.setForeground(Color.decode("#FFFFFF"));
         subfondo.add(fotobtn);
 
+        // Boton crear platillo
         JButton crearP = new JButton("CREAR");
         crearP.setSize(150,50);
         crearP.setLocation(600,450);
@@ -501,8 +506,8 @@ public class Ventana extends JFrame{
         crearP.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,"Test Panel Crear");
-                actualizarPanel(5);
+                JOptionPane.showMessageDialog(null,"Creado correctamente");
+                actualizarPanel(2); // redirecciona a inicio
             }
         });
         subfondo.add(crearP);
@@ -608,7 +613,7 @@ public class Ventana extends JFrame{
         regresar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                actualizarPanel(1);
+               // actualizarPanel();
             }
         });
         subfondo.add(regresar);
@@ -625,7 +630,7 @@ public class Ventana extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 //cambiar esta accion de boton
                 actualizarPanel(6);
-                JOptionPane.showMessageDialog(null, "Prueba Editar Texto");
+                //JOptionPane.showMessageDialog(null, "Prueba Editar ");
             }
         });
         subfondo.add(editar);
@@ -731,7 +736,7 @@ public class Ventana extends JFrame{
         regresar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                actualizarPanel(1);
+                //actualizarPanel(7); //regresa a crear orden
             }
         });
         subfondo.add(regresar);
@@ -885,8 +890,8 @@ public class Ventana extends JFrame{
         crearP.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,"Actualizar Test");
-               // actualizarPanel(5);
+                JOptionPane.showMessageDialog(null,"Actualizado");
+                actualizarPanel(5); // lo regresamos a info platillo o a consultar platillos?
             }
         });
         subfondo.add(crearP);
@@ -902,7 +907,7 @@ public class Ventana extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //accion de boton a cambiar
-                actualizarPanel(1);
+                actualizarPanel(5); // info platillo
             }
         });
         subfondo.add(cancelar);
@@ -977,23 +982,318 @@ public class Ventana extends JFrame{
         subfondo.add(editar);
 
 
+        editar.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO Auto-generated method stub
+                actualizarPanel(10); // redirecciona a editar orden
+            }
+
+        });
+
         return fondo;
 
     }
 
+    public JPanel consultarPlatillos(){
+        // ------------------panel Consultar Platillos--------------------
+	        
+		JPanel consultarPlatillos= new JPanel();
+		consultarPlatillos.setLayout(new BorderLayout());
+		consultarPlatillos.setOpaque(true);
+		consultarPlatillos.setBackground(naranja);
+		menu(consultarPlatillos); 
+		JLabel lblConsultar= new JLabel("   ", JLabel.CENTER);
+		lblConsultar.setForeground(Color.white);
+		lblConsultar.setFont(new Font("Leelawadee UI Semilight", Font.TRUETYPE_FONT, 40));
+		consultarPlatillos.add(lblConsultar,BorderLayout.NORTH);
+		
+		JLabel lblBorde1= new JLabel("  ", JLabel.CENTER);
+		consultarPlatillos.add(lblBorde1,BorderLayout.WEST);
+		
+		JLabel lblBorde2= new JLabel("  ", JLabel.CENTER);
+		consultarPlatillos.add(lblBorde2,BorderLayout.EAST);
+		
+		JLabel lblBorde3= new JLabel("  ", JLabel.CENTER);
+		lblBorde3.setFont(new Font("Leelawadee UI Semilight", Font.TRUETYPE_FONT, 40));
+		consultarPlatillos.add(lblBorde3,BorderLayout.SOUTH);
+		
+		JPanel panelElementos= new JPanel();
+		panelElementos.setLayout(new GridLayout(0,3,10, 10));
+		panelElementos.setOpaque(true);
+		panelElementos.setBackground(azul);
+		
+		// añadir elementos al panel 
+		panelElementos.add(new ElementoPanelConsultar("Pasta","pasta.jpg",400).elemento);
+		panelElementos.add(new ElementoPanelConsultar("Pasta","pasta.jpg",400).elemento);
+		panelElementos.add(new ElementoPanelConsultar("Pasta","pasta.jpg",400).elemento);
+		panelElementos.add(new ElementoPanelConsultar("Pasta","pasta.jpg",400).elemento);
+		panelElementos.add(new ElementoPanelConsultar("Pasta","pasta.jpg",400).elemento);
+		panelElementos.add(new ElementoPanelConsultar("Pasta","pasta.jpg",400).elemento);
+		panelElementos.add(new ElementoPanelConsultar("Pasta","pasta.jpg",400).elemento);
+		panelElementos.add(new ElementoPanelConsultar("Pasta","pasta.jpg",400).elemento);
+	
+		// ---------scrollpane---------
+		JScrollPane scrollPane = new JScrollPane(panelElementos);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        
+        // ----- panel centro para bordes------------
+        JPanel centro= new JPanel();
+        centro.setBackground(azul);
+        centro.setLayout(new BorderLayout());
+        
+        JLabel lblBordeRe= new JLabel("  ", JLabel.CENTER);
+        centro.add(lblBordeRe,BorderLayout.WEST);
+		
+		JLabel lblBordeRe2= new JLabel("  ", JLabel.CENTER);
+		centro.add(lblBordeRe2,BorderLayout.EAST);
+		
+		JLabel lblBordeRe3= new JLabel("  ", JLabel.CENTER);
+		centro.add(lblBordeRe3,BorderLayout.SOUTH);
+		
+		JLabel lblBordeRe4= new JLabel("Consultar Platillos", JLabel.CENTER);
+		
+		lblBordeRe4.setForeground(Color.white);
+		lblBordeRe4.setFont(new Font("Leelawadee UI Semilight", Font.TRUETYPE_FONT, 40));
+		centro.add(lblBordeRe4,BorderLayout.NORTH);
+        
+		
+		centro.add(scrollPane,BorderLayout.CENTER);
+		consultarPlatillos.add(centro,BorderLayout.CENTER);
 
-    //-------------------delia aqui esta lo que pediste xD------------------------------
-
-    public void consultarPlatillos(){
-
+        return consultarPlatillos;
     }
 
-    public void crearOrden(){
+    public JPanel crearOrden(){
+        // ------------------panel Crear nueva  Orden--------------------
+        float totalPrice=0;
+	    int totalPlatos=0;
 
+        JPanel crearOrden= new JPanel();
+		crearOrden.setLayout(new BorderLayout());
+		crearOrden.setOpaque(true);
+		crearOrden.setBackground(naranja);
+		menu(crearOrden); 
+		JLabel lblConsultar= new JLabel("   ", JLabel.CENTER);
+		lblConsultar.setForeground(Color.white);
+		lblConsultar.setFont(new Font("Leelawadee UI Semilight", Font.TRUETYPE_FONT, 40));
+		crearOrden.add(lblConsultar,BorderLayout.NORTH);
+		
+		JLabel lblBorde1= new JLabel("  ", JLabel.CENTER);
+		crearOrden.add(lblBorde1,BorderLayout.WEST);
+		
+		JLabel lblBorde2= new JLabel("  ", JLabel.CENTER);
+		crearOrden.add(lblBorde2,BorderLayout.EAST);
+		
+		// ---------panel abajo-------------------
+		JPanel pAbajo= new JPanel();
+		pAbajo.setBackground(naranja);;
+		pAbajo.setLayout(new FlowLayout(0, 150, 10));
+		
+		JLabel lblTotalPrecio= new JLabel("Total: $"+totalPrice, JLabel.CENTER);
+		lblTotalPrecio.setForeground(Color.white);
+		lblTotalPrecio.setFont(new Font("Leelawadee UI Semilight", Font.TRUETYPE_FONT, 20));
+		
+		JLabel lblTotalPlatos= new JLabel("Total platillos: "+totalPlatos, JLabel.CENTER);
+		lblTotalPlatos.setForeground(Color.white);
+		lblTotalPlatos.setFont(new Font("Leelawadee UI Semilight", Font.TRUETYPE_FONT, 20));
+		
+        // boton crear----------
+		JButton btnCrear= new JButton("Crear");
+        btnCrear.setBackground(azul);
+        btnCrear.setForeground(Color.white);
+        btnCrear.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 25));
+        btnCrear.setFocusPainted(false);
+        
+        btnCrear.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO Auto-generated method stub
+                JOptionPane.showMessageDialog(null,"Creado");
+                actualizarPanel(2);
+            }
+            
+        });
+
+
+		pAbajo.add(lblTotalPrecio);
+		pAbajo.add(lblTotalPlatos);
+		pAbajo.add(btnCrear);
+		
+		crearOrden.add(pAbajo, BorderLayout.SOUTH);
+
+		//-------------------panel elementos---------------
+		JPanel panelElementos= new JPanel();
+		panelElementos.setLayout(new GridLayout(0,3,10, 10));
+		panelElementos.setOpaque(true);
+		panelElementos.setBackground(azul);
+		
+		// añadir elementos al panel 
+		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
+		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
+		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
+		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
+		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
+		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
+		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
+		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
+	
+		// ---------scrollpane---------
+		JScrollPane scrollPane = new JScrollPane(panelElementos);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        
+        // ----- panel centro para bordes------------
+        JPanel centro= new JPanel();
+        centro.setBackground(azul);
+        centro.setLayout(new BorderLayout());
+        
+        JLabel lblBordeRe= new JLabel("  ", JLabel.CENTER);
+        centro.add(lblBordeRe,BorderLayout.WEST);
+		
+		JLabel lblBordeRe2= new JLabel("  ", JLabel.CENTER);
+		centro.add(lblBordeRe2,BorderLayout.EAST);
+		
+		JLabel lblBordeRe3= new JLabel("  ", JLabel.CENTER);
+		centro.add(lblBordeRe3,BorderLayout.SOUTH);
+		
+		JLabel lblBordeRe4= new JLabel("Crear Orden", JLabel.CENTER);
+		
+		lblBordeRe4.setForeground(Color.white);
+		lblBordeRe4.setFont(new Font("Leelawadee UI Semilight", Font.TRUETYPE_FONT, 40));
+		centro.add(lblBordeRe4,BorderLayout.NORTH);
+        
+		centro.add(scrollPane,BorderLayout.CENTER);
+		crearOrden.add(centro,BorderLayout.CENTER);
+
+        return crearOrden;
     }
 
-    public void editarOrden(){
+    public JPanel editarOrden(){
+        // ------------------panel editar Orden--------------------
+	    float totalPrice=0;
+	    int totalPlatos=0;
+	    String nombreCliente="Agus Tilin";
+	    
+		JPanel editarOrden= new JPanel();
+		editarOrden.setLayout(new BorderLayout());
+		editarOrden.setOpaque(true);
+		editarOrden.setBackground(naranja);
+		menu(editarOrden); 
+		JLabel lblConsultar= new JLabel("   ", JLabel.CENTER);
+		lblConsultar.setForeground(Color.white);
+		lblConsultar.setFont(new Font("Leelawadee UI Semilight", Font.TRUETYPE_FONT, 40));
+		editarOrden.add(lblConsultar,BorderLayout.NORTH);
+		
+		JLabel lblBorde1= new JLabel("  ", JLabel.CENTER);
+		editarOrden.add(lblBorde1,BorderLayout.WEST);
+		
+		JLabel lblBorde2= new JLabel("  ", JLabel.CENTER);
+		editarOrden.add(lblBorde2,BorderLayout.EAST);
+		
+		// ---------panel abajo-------------------
+		JPanel pAbajo= new JPanel();
+		pAbajo.setBackground(naranja);;
+		pAbajo.setLayout(new FlowLayout(0, 80, 10));
+		
+        //----- boton cancelar editar orden -----
+		JButton btnCancelar= new JButton("Cancelar");
+		//btnVer.setPreferredSize(new Dimension(75,30));
+		btnCancelar.setBackground(azul);
+		btnCancelar.setForeground(Color.white);
+		btnCancelar.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 25));
+		btnCancelar.setFocusPainted(false);
+		
+        btnCancelar.addActionListener(new ActionListener() {
 
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO Auto-generated method stub
+                actualizarPanel(9); // redirecciona a consultar orden
+            }
+            
+        });
+
+		JLabel lblTotalPrecio= new JLabel("Total: $"+totalPrice, JLabel.CENTER);
+		lblTotalPrecio.setForeground(Color.white);
+		lblTotalPrecio.setFont(new Font("Leelawadee UI Semilight", Font.TRUETYPE_FONT, 20));
+		
+		JLabel lblTotalPlatos= new JLabel("Total platillos: "+totalPlatos, JLabel.CENTER);
+		lblTotalPlatos.setForeground(Color.white);
+		lblTotalPlatos.setFont(new Font("Leelawadee UI Semilight", Font.TRUETYPE_FONT, 20));
+		
+        //----- boton actualizar orden----
+		JButton btnActualizar= new JButton("Actualizar");
+        //btnVer.setPreferredSize(new Dimension(75,30));
+        btnActualizar.setBackground(azul);
+        btnActualizar.setForeground(Color.white);
+        btnActualizar.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 25));
+        btnActualizar.setFocusPainted(false);
+		
+        btnActualizar.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO Auto-generated method stub
+                JOptionPane.showMessageDialog(null,"Actualizado");
+                actualizarPanel(9);// redirecciona a consultar orden
+            }
+            
+        });
+
+
+        pAbajo.add(btnCancelar);
+		pAbajo.add(lblTotalPrecio);
+		pAbajo.add(lblTotalPlatos);
+		pAbajo.add(btnActualizar);
+		
+		editarOrden.add(pAbajo, BorderLayout.SOUTH);
+		
+		//-------------------panel elementos---------------
+		JPanel panelElementos= new JPanel();
+		panelElementos.setLayout(new GridLayout(0,3,10, 10));
+		panelElementos.setOpaque(true);
+		panelElementos.setBackground(azul);
+		
+		// añadir elementos al panel 
+		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
+		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
+		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
+		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
+		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
+		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
+		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
+		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
+	
+		// ---------scrollpane---------
+		JScrollPane scrollPane = new JScrollPane(panelElementos);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        
+        // ----- panel centro para bordes------------
+        JPanel centro= new JPanel();
+        centro.setBackground(azul);
+        centro.setLayout(new BorderLayout());
+        
+        JLabel lblBordeRe= new JLabel("  ", JLabel.CENTER);
+        centro.add(lblBordeRe,BorderLayout.WEST);
+		
+		JLabel lblBordeRe2= new JLabel("  ", JLabel.CENTER);
+		centro.add(lblBordeRe2,BorderLayout.EAST);
+		
+		JLabel lblBordeRe3= new JLabel("  ", JLabel.CENTER);
+		centro.add(lblBordeRe3,BorderLayout.SOUTH);
+		
+		JLabel lblBordeRe4= new JLabel("Editando Orden de "+nombreCliente, JLabel.CENTER);
+		
+		lblBordeRe4.setForeground(Color.white);
+		lblBordeRe4.setFont(new Font("Leelawadee UI Semilight", Font.TRUETYPE_FONT, 40));
+		centro.add(lblBordeRe4,BorderLayout.NORTH);
+        
+		centro.add(scrollPane,BorderLayout.CENTER);
+		editarOrden.add(centro,BorderLayout.CENTER);
+
+        return editarOrden;
     }
 
 
@@ -1010,11 +1310,11 @@ public class Ventana extends JFrame{
         switch (actual) {
 
             case 1:
-                panel = pantallaInicio();
+                panel = login();
                 this.add(panel);
                 break;
             case 2:
-                //panel = consultaPlatillos();
+                panel = pantallaInicio();
                 this.add(panel);
                 
                 break;
@@ -1023,27 +1323,36 @@ public class Ventana extends JFrame{
                 this.add(panel);
                 break;
             case 4:
-                panel=login();
+                panel=consultarPlatillos();
                 this.add(panel);
                 break;
-                //cases de prueba que seran modificados
-                case 5:
-                    panel=infoPlatillo();
-                    this.add(panel);
-                    break;
+                
+            case 5:
+                panel=infoPlatillo();
+                this.add(panel);
+                break;
             case 6:
-                panel=infoOrden();
+                panel=editarPlatillo();
                 this.add(panel);
                 break;
             case 7:
-                panel=editarPlatillo();
+                panel=crearOrden();
                 this.add(panel);
                 break;
 
             case 8:
-                panel=consultaOrden();
+                panel=infoOrden();
                 this.add(panel);
                 break;
+            case 9:
+            panel=consultaOrden();
+            this.add(panel);
+            break;
+
+            case 10:
+            panel=editarOrden();
+            this.add(panel);
+            break;
         }
 
         this.repaint();
