@@ -18,6 +18,7 @@ import java.io.PrintWriter;
 import java.util.StringTokenizer;
 
 import javax.imageio.ImageIO;
+import javax.print.attribute.standard.MediaName;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 //import javax.swing.event.DocumentEvent;
@@ -30,16 +31,17 @@ public class Ventana extends JFrame{
     public JPanel panel;
     public String nombreUser;
     public String correoUser;
-    Color naranja= new Color(233,98,65);
-	Color azul= new Color(56,57,82);
+    public Color naranja= new Color(233,98,65);
+	public Color azul= new Color(56,57,82);
     public int anterior;
     public int actual;
 
     //---- variables para hacer funcionar CRUD platillos---
-    String nombreImagen;
-    private String rutaTxt = "platillos.txt"; 
-    Platillo platillo;
-    ListaPlatillos listaPlatillos;
+    public String nombreImagen;
+    public String rutaTxt = "platillos.txt"; 
+    public Platillo platillo;
+    public ListaPlatillos listaPlatillos;
+    String [] opcs ={"Comida Rapida", "Mariscos", "Ensaladas", "Postres","Bebidas","Sushi","Pastas","Comida Mexicana"};
     //
     public Ventana() {
 
@@ -550,7 +552,7 @@ public class Ventana extends JFrame{
         lblSelec.setLocation(70,310);
         subfondo.add(lblSelec);
 
-        String [] opcs ={"Comida Rapida", "Mariscos", "Ensaladas", "Postres","Bebidas","Sushi","Pastas","Comida Mexicana"};
+        
         JComboBox <String> categorias = new JComboBox<>(opcs);
         categorias.getSelectedItem();
         categorias.setSize(250,20);
@@ -712,12 +714,13 @@ public class Ventana extends JFrame{
     }
 
     //---------------------------informacion del platillo-----------------------------------------
-    public JPanel infoPlatillo(){
-        String nombrePlatillo="Pasta";
-        String description="Deliciosa pasta con salsa de tomate ";
-        String platoCategoria="Comida Rapida";
-        float precioPlato=400;
-        String nombreImagen="pasta.jpg";
+    public JPanel infoPlatillo(Platillo platillo){
+        //this.platillo=platillo;
+        String nombrePlatillo=platillo.getNombre();
+        String description=platillo.getDescripcion();
+        String platoCategoria=platillo.getCategoria();
+        float precioPlato=platillo.getPrecio();
+        String nombreImagen=platillo.getRutaImagen();
 
         JPanel fondo = new JPanel();
         fondo.setBackground(Color.decode("#E96241"));
@@ -850,9 +853,8 @@ public class Ventana extends JFrame{
         editar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //cambiar esta accion de boton
-                actualizarPanel(6);
-                //JOptionPane.showMessageDialog(null, "Prueba Editar ");
+                actualizarPanel2(6,platillo); // redireccion a editar platillo y manda el platillo que será editado
+               
             }
         });
         subfondo.add(editar);
@@ -995,8 +997,9 @@ public class Ventana extends JFrame{
     }
 
     //--------------------aqui se editan los platillos-------------------------------------ya
-    public JPanel editarPlatillo(){
-        String nombreImagen="iconoImagen.png";
+    public JPanel editarPlatillo(Platillo platillo){
+        String nombreImagen=platillo.getRutaImagen();
+
         JPanel fondo = new JPanel();
         fondo.setBackground(Color.decode("#E96241"));
         fondo.setSize(this.getWidth(),this.getHeight());
@@ -1030,6 +1033,7 @@ public class Ventana extends JFrame{
         txtNombre.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 20));
         txtNombre.setSize(350,30);
         txtNombre.setLocation(70,140);
+        txtNombre.setText(platillo.getNombre());
         subfondo.add(txtNombre);
 
         JLabel desc = new JLabel("Descripcion");
@@ -1042,6 +1046,7 @@ public class Ventana extends JFrame{
 
 
         JTextArea txtDesc = new JTextArea(10,20);
+        txtDesc.setText(platillo.getDescripcion());
         txtDesc.setLineWrap(true);
         txtDesc.setWrapStyleWord(true);
         txtDesc.addKeyListener(new KeyListener() {
@@ -1074,9 +1079,16 @@ public class Ventana extends JFrame{
         lblSelec.setLocation(70,310);
         subfondo.add(lblSelec);
 
-        String [] opcs ={"Comida Rapida", "Mariscos", "Ensaladas", "Postres","Bebidas","Sushi"};
+        
         JComboBox <String> categorias = new JComboBox<>(opcs);
-        categorias.getSelectedItem();
+        int opcion=0;
+        for (int i=0;i<opcs.length;i++){
+            if(opcs[i].equals(platillo.categoria)){
+                opcion=i;
+            }
+        }
+        categorias.setSelectedItem(opcs[opcion]);
+        //categorias.getSelectedItem();
         categorias.setSize(250,30);
         categorias.setLocation(70,385);
         subfondo.add(categorias);
@@ -1100,6 +1112,7 @@ public class Ventana extends JFrame{
         txtPrecio.setForeground(Color.decode("#E96241"));
         txtPrecio.setSize(150,30);
         txtPrecio.setLocation(70,450);
+        txtPrecio.setText(String.valueOf(platillo.getPrecio())); // convierte de float a String
         subfondo.add(txtPrecio);
         txtPrecio.addKeyListener(new KeyListener() {
             @Override
@@ -1141,6 +1154,16 @@ public class Ventana extends JFrame{
         fotobtn.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 16));
         fotobtn.setBackground(Color.decode("#E96241"));
         fotobtn.setForeground(Color.decode("#FFFFFF"));
+
+        fotobtn.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO Auto-generated method stub
+               mensaje("aun no sube imgagen");
+            }
+            
+        });
         subfondo.add(fotobtn);
 
         JButton crearP = new JButton("Actualizar");
@@ -1153,8 +1176,8 @@ public class Ventana extends JFrame{
         crearP.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,"Actualizado");
-                actualizarPanel(5); // lo regresamos a info platillo o a consultar platillos?
+                JOptionPane.showMessageDialog(null,"aun no actualiza esta funcion");
+                //actualizarPanel(5); // lo regresamos a info platillo o a consultar platillos?
             }
         });
         subfondo.add(crearP);
@@ -1170,7 +1193,7 @@ public class Ventana extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //accion de boton a cambiar
-                actualizarPanel(5); // info platillo
+                actualizarPanel2(anterior,platillo); // info platillo
             }
         });
         subfondo.add(cancelar);
@@ -1307,31 +1330,26 @@ public class Ventana extends JFrame{
 		panelElementos.setOpaque(true);
 		panelElementos.setBackground(azul);
 		
-		// añadir elementos al panel 
-        for (int i=0;i<8;i++){
-            ElementoPanelConsultar elemento =new ElementoPanelConsultar("Pasta","pasta.jpg",400);
+		// añadir elementos de la lista al panel 
+        for (int i=0;i<listaPlatillos.cantidadPlatillos();i++){
+            platillo=listaPlatillos.obtenerPlatillo(i);
+            ElementoPanelConsultar elemento =new ElementoPanelConsultar(listaPlatillos.obtenerPlatillo(i));
             
             elemento.getBtnVer().addActionListener(new ActionListener() {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // TODO Auto-generated method stub
-                    actualizarPanel(5);// redirecciona a info platillo
+                    //redirecciona a info platillo
+                    actualizarPanel2(5,elemento.platillo);// // le manda a que elemento se refiere para mostrar su info en el panel 
+                    
                 }
                 
             });
             panelElementos.add(elemento.elemento);
             
         }
-		/*panelElementos.add(new ElementoPanelConsultar("Pasta","pasta.jpg",400).elemento);
-		panelElementos.add(new ElementoPanelConsultar("Pasta","pasta.jpg",400).elemento);
-		panelElementos.add(new ElementoPanelConsultar("Pasta","pasta.jpg",400).elemento);
-		panelElementos.add(new ElementoPanelConsultar("Pasta","pasta.jpg",400).elemento);
-		panelElementos.add(new ElementoPanelConsultar("Pasta","pasta.jpg",400).elemento);
-		panelElementos.add(new ElementoPanelConsultar("Pasta","pasta.jpg",400).elemento);
-		panelElementos.add(new ElementoPanelConsultar("Pasta","pasta.jpg",400).elemento);
-		panelElementos.add(new ElementoPanelConsultar("Pasta","pasta.jpg",400).elemento);
-        */
+		
 		// ---------scrollpane---------
 		JScrollPane scrollPane = new JScrollPane(panelElementos);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -1659,15 +1677,7 @@ public class Ventana extends JFrame{
                 panel=consultarPlatillos();
                 this.add(panel);
                 break;
-                
-            case 5:
-                panel=infoPlatillo();
-                this.add(panel);
-                break;
-            case 6:
-                panel=editarPlatillo();
-                this.add(panel);
-                break;
+               
             case 7:
                 panel=crearOrden();
                 this.add(panel);
@@ -1691,5 +1701,38 @@ public class Ventana extends JFrame{
         this.repaint();
         this.revalidate();
     }
+
+    //--------------funcion de actualizar las pantallas que necesitan de  un platillo-----------------
+   public void actualizarPanel2(int ventSiguiente,Platillo platillo) {
+
+    anterior=actual;
+    actual=ventSiguiente;
+
+    if(panel!= null) {
+        this.remove(panel);
+    }
+
+    switch (actual) {
+
+        
+ 
+        case 5:
+            panel=infoPlatillo(platillo);
+            this.add(panel);
+            break;
+        case 6:
+            panel=editarPlatillo(platillo);
+            this.add(panel);
+            break;
+        case 8:
+            panel=infoOrden();
+            this.add(panel);
+            break;
+       
+    }
+
+    this.repaint();
+    this.revalidate();
+}
 
 }

@@ -1,1 +1,3 @@
 Pasta|Deliciosa pasta con salsa de tomate|Pastas|150.0|imgPlatillos/pasta.png
+Papas fritas|Papas fritas orden mediana.|Comida Rapida|40.0|imgPlatillos/papasFritas.png
+Hamburguesa|Me gustan las hamburguesas|Comida Rapida|80.0|imgPlatillos/hamburguesa.png

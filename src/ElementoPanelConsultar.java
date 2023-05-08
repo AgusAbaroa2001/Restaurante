@@ -25,11 +25,14 @@ public class ElementoPanelConsultar extends JPanel{
 	 //imagenOriginal;
     JButton btnEliminar;
     JButton btnVer;
+
+    Platillo platillo;
 	
-	public ElementoPanelConsultar(String nombre, String ruta,float precio) {
-		rutaImagen=ruta;
-		this.precio=precio;
-		nombrePlatillo=nombre;
+	public ElementoPanelConsultar(Platillo platillo) {
+		rutaImagen=platillo.rutaImagen;
+		this.precio=platillo.precio;
+		nombrePlatillo=platillo.nombre;
+        this.platillo=platillo;
 		
 		// --- panel principal
 		elemento = new JPanel(new BorderLayout()); 
@@ -51,7 +54,7 @@ public class ElementoPanelConsultar extends JPanel{
         pCentro.setBackground(Color.white);
 
         // redimensionar foto
-        ImageIcon imagenOriginal = new ImageIcon(ruta);
+        ImageIcon imagenOriginal = new ImageIcon(rutaImagen);
         Image imagen = imagenOriginal.getImage();
         Image imagenRedimensionada = imagen.getScaledInstance(200, 150, Image.SCALE_SMOOTH);
         ImageIcon imagenRedimensionadaIcon = new ImageIcon(imagenRedimensionada);
