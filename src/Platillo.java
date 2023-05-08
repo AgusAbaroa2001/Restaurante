@@ -17,11 +17,14 @@ public class Platillo {
         imagen= new ImageIcon(rutaImagen);
     }
 
+    public Platillo() {
+    }
+
     // gets para acceder a los datos
     public String getNombre(){
         return nombre;
     }
-    public String getdescripcion(){
+    public String getDescripcion(){
         return descripcion;
     }
     public String getCategoria(){
@@ -42,7 +45,7 @@ public class Platillo {
     public void setNombre(String nombre){
         this.nombre=nombre;
     }
-    public void setdescripcion(String descripcion){
+    public void setDescripcion(String descripcion){
         this.descripcion=descripcion;
     }
     public void setCategoria(String categoria){
@@ -53,6 +56,7 @@ public class Platillo {
     }
     public void setRutaImagen(String rutaImagen){
         this.rutaImagen= rutaImagen;
+        imagen= new ImageIcon(rutaImagen);
     }
 
     public void setImagenIcon(String rutaImagen){

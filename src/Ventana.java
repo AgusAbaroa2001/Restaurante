@@ -9,7 +9,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.util.StringTokenizer;
 
 import javax.swing.*;
 //import javax.swing.event.DocumentEvent;
@@ -27,13 +31,22 @@ public class Ventana extends JFrame{
     public int anterior;
     public int actual;
 
+    //---- variables para hacer funcionar CRUD platillos---
+    private String rutaTxt = "platillos.txt"; 
+    Platillo platillo;
+    ListaPlatillos listaPlatillos;
+    //
     public Ventana() {
+
         this.setSize(900,700); // medidas provisionales, se pueden cambiar
         this.setLocationRelativeTo(null);
         this.setTitle("Gourmet Eats");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
 
+        listaPlatillos= new ListaPlatillos();
+        cargarTxtPlatillos(); // try catch?
+        
         panel= login(); // panel  principal
         //panel= consultaOrden(); // para testear paneles
         panel.setSize(this.getWidth(), this.getHeight());;
@@ -44,6 +57,93 @@ public class Ventana extends JFrame{
         this.revalidate();
         this.setVisible(true);
     }
+
+    //------ mensaje de dialogo customizable----
+    public void mensaje(String texto){
+        JOptionPane.showMessageDialog(null, texto);
+    }
+    //-------funcion para agregar del archivo txt los platillos a la lista --------
+    private void cargarTxtPlatillos() {
+        File ruta = new File(rutaTxt);
+        try{
+            FileReader fr = new FileReader(ruta);
+            BufferedReader br = new BufferedReader(fr);
+
+            String linea = null;
+            while((linea = br.readLine())!=null){ // --este while agrega a la lista todos los Platillos del txt--
+                StringTokenizer st = new StringTokenizer(linea, "|"); // esto separa el renglon del txt para poder asignarle al producto sus atributos
+                platillo = new Platillo();
+                platillo.setNombre(st.nextToken());
+                platillo.setDescripcion(st.nextToken());
+                platillo.setCategoria(st.nextToken());
+                platillo.setPrecio(Float.parseFloat(st.nextToken())); //conversion a float
+                platillo.setRutaImagen(st.nextToken()); // asigna la ruta de la imagen y su icono en caso de ocuparlo
+                
+                listaPlatillos.agregarPlatillo(platillo);
+            }
+            br.close();
+        }catch(Exception ex){
+            mensaje("Error al cargar archivo: "+ex.getMessage());
+            System.out.println(ex.getMessage());
+        }
+    }
+    //----- funcion para pasar lo de la lista Platillos al txt----
+    public void grabar_txt(){
+        FileWriter fw;
+        PrintWriter pw;
+        try{
+            fw = new FileWriter(rutaTxt);
+            pw = new PrintWriter(fw);
+            
+            for(int i = 0; i < listaPlatillos.cantidadPlatillos(); i++){
+                platillo = listaPlatillos.obtenerPlatillo(i);
+                pw.println(String.valueOf(platillo.getNombre()+"| "+platillo.getDescripcion()+"| "+platillo.getCategoria()+"| "+platillo.getPrecio()+"| "+platillo.getRutaImagen())); //pasa lo del objeto al archivo
+            }
+             pw.close();
+            
+        }catch(Exception ex){
+            mensaje("Error al grabar archivo: "+ex.getMessage());
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    //---- funcion q agrega platillo a la lista y reescribe el txt---  ( hay q verificar que los txt field esten bien)
+    public void ingresarPlatillo(String nombrePlatillo,String descripcion, String categoria, float precio, String rutaImagen ){
+        platillo = new Platillo(nombrePlatillo,descripcion,categoria,precio,rutaImagen);
+        
+        if(listaPlatillos.buscaNombre(platillo.getNombre())!= -1)mensaje("Este nombre ya existe"); // si ya existe
+        else listaPlatillos.agregarPlatillo(platillo);
+        
+        grabar_txt();
+    }
+    //---- funcion q modifica el platillo de la lista y reescribe el txt---  ( hay q verificar que los txt field esten bien)    
+    public void modificarPlatillo(String nombrePlatillo,String descripcion, String categoria, float precio, String rutaImagen ){
+        
+        int posicion = listaPlatillos.buscaNombre(nombrePlatillo);
+        platillo = new Platillo(nombrePlatillo, descripcion, categoria, precio,rutaImagen );
+        
+        if(posicion != -1) // si no lo encuentra en la lista
+        listaPlatillos.modificarPlatillo(posicion, platillo);
+        
+        grabar_txt();
+    }
+    //---- funcion para eliminar platillo de la lista y reescribir txt---
+    public void eliminarPlatillo(String nombrePlatillo){
+
+        int posicion = listaPlatillos.buscaNombre(nombrePlatillo);
+
+        if(posicion == -1) mensaje("codigo no existe");
+        
+        else{
+            int s = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar este producto","Si/No",0);
+            if(s == 0){
+                listaPlatillos.eliminarPlatillo(posicion);
+                grabar_txt();
+            }
+        }
+ 
+    }
+     
     // -------------------------------MenuBar-------------------------------
     public void menu(JPanel panelActual){
         JMenuBar menuA = new JMenuBar();
@@ -362,7 +462,7 @@ public class Ventana extends JFrame{
     }
 
 
-    //------------------creacion de platillos-----------------------
+    //------------------panel creacion de platillos-----------------------
     public JPanel crearPlatillo(){
         String nombreImagen = "iconoImagen.png";
 
