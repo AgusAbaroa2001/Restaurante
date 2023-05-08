@@ -8,14 +8,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.StringTokenizer;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 //import javax.swing.event.DocumentEvent;
 //import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -32,6 +36,7 @@ public class Ventana extends JFrame{
     public int actual;
 
     //---- variables para hacer funcionar CRUD platillos---
+    String nombreImagen;
     private String rutaTxt = "platillos.txt"; 
     Platillo platillo;
     ListaPlatillos listaPlatillos;
@@ -108,11 +113,14 @@ public class Ventana extends JFrame{
     }
 
     //---- funcion q agrega platillo a la lista y reescribe el txt---  ( hay q verificar que los txt field esten bien)
-    public void ingresarPlatillo(String nombrePlatillo,String descripcion, String categoria, float precio, String rutaImagen ){
+    public void crearNuevoPlatillo(String nombrePlatillo,String descripcion, String categoria, float precio, String rutaImagen ){
         platillo = new Platillo(nombrePlatillo,descripcion,categoria,precio,rutaImagen);
         
         if(listaPlatillos.buscaNombre(platillo.getNombre())!= -1)mensaje("Este nombre ya existe"); // si ya existe
-        else listaPlatillos.agregarPlatillo(platillo);
+        else {
+            listaPlatillos.agregarPlatillo(platillo);
+            mensaje("Creado correctamente");
+        }
         
         grabar_txt();
     }
@@ -464,8 +472,8 @@ public class Ventana extends JFrame{
 
     //------------------panel creacion de platillos-----------------------
     public JPanel crearPlatillo(){
-        String nombreImagen = "iconoImagen.png";
-
+        nombreImagen = "iconoImagen.png";
+        
         JPanel fondo = new JPanel();
         fondo.setBackground(Color.decode("#E96241"));
         fondo.setSize(this.getWidth(),this.getHeight());
@@ -592,22 +600,63 @@ public class Ventana extends JFrame{
 
          //  redimensiona y agrega la imagen del platillo
          int largo=200, ancho=200;
+         
          ImageIcon imagenOriginal = new ImageIcon(nombreImagen);
          Image imagen = imagenOriginal.getImage();
          Image imagenRedimensionada = imagen.getScaledInstance(largo, ancho, Image.SCALE_SMOOTH);
          ImageIcon imagenRedimensionadaIcon = new ImageIcon(imagenRedimensionada);
          JLabel lblimagen = new JLabel(imagenRedimensionadaIcon);
+         
          lblimagen.setSize(largo, ancho);
          lblimagen.setLocation(525,150);
          subfondo.add(lblimagen);
 
-        JButton fotobtn = new JButton("Ajuntar Foto");
+         // boton adjuntar foto---
+        JButton fotobtn = new JButton("Adjuntar Foto");
         fotobtn.setSize(150,40);
         fotobtn.setLocation(550,360);
         fotobtn.setFocusPainted(false);
         fotobtn.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 12));
         fotobtn.setBackground(Color.decode("#E96241"));
         fotobtn.setForeground(Color.decode("#FFFFFF"));
+        fotobtn.addActionListener(new ActionListener(){
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO Auto-generated method stub
+                // Mostrar el cuadro de diálogo para seleccionar un archivo
+                JFileChooser selector = new JFileChooser();
+                FileNameExtensionFilter filtro = new FileNameExtensionFilter("png,jpg", "png", "jpg");
+                selector.setFileFilter(filtro);
+                
+                if (selector.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                    // Si el usuario seleccionó un archivo, intentar cargarlo como imagen
+                    File archivoImagen = selector.getSelectedFile();
+                    try {
+                            BufferedImage imagen = ImageIO.read(archivoImagen);
+                            if(imagen!=null) {
+
+                            // Guardar la imagen en la carpeta "imgPlatillos" en formato PNG
+                            String nombreArchivo = archivoImagen.getName();
+                            int extensionIndex = nombreArchivo.lastIndexOf(".");
+                            nombreImagen= nombreArchivo.substring(0, extensionIndex) + ".png";
+                            File carpetaImagenes = new File("imgPlatillos");
+                            carpetaImagenes.mkdir(); // Crear la carpeta si no existe
+                            File archivoNuevo = new File(carpetaImagenes, nombreImagen);
+                            ImageIO.write(imagen, "png", archivoNuevo);
+                            
+                        }
+                            else
+                                JOptionPane.showMessageDialog(null, "Seleccione un archivo fomato png o jpg");
+                        
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+
+        });
+
         subfondo.add(fotobtn);
 
         // Boton crear platillo
@@ -621,7 +670,15 @@ public class Ventana extends JFrame{
         crearP.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,"Creado correctamente");
+                
+                // condiciones
+                /* 
+                String nombre= txtNombre.getText();
+                String descripcion="";
+                String categoria=""; 
+                float precio;
+                String rutaImagen="" ;
+                crearNuevoPlatillo(nombre,descripcion,categoria,precio,rutaImagen);*/
                 actualizarPanel(2); // redirecciona a inicio
             }
         });
