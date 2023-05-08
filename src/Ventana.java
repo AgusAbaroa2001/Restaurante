@@ -53,7 +53,7 @@ public class Ventana extends JFrame{
         cargarTxtPlatillos(); // try catch?
         
         panel= login(); // panel  principal
-        //panel= consultaOrden(); // para testear paneles
+        //panel= crearPlatillo(); // para testear paneles
         panel.setSize(this.getWidth(), this.getHeight());;
         panel.setLocation(0,0);
         // panel.setBackground(Color.decode("#0665c0"));
@@ -102,7 +102,7 @@ public class Ventana extends JFrame{
             
             for(int i = 0; i < listaPlatillos.cantidadPlatillos(); i++){
                 platillo = listaPlatillos.obtenerPlatillo(i);
-                pw.println(String.valueOf(platillo.getNombre()+"| "+platillo.getDescripcion()+"| "+platillo.getCategoria()+"| "+platillo.getPrecio()+"| "+platillo.getRutaImagen())); //pasa lo del objeto al archivo
+                pw.println(String.valueOf(platillo.getNombre()+"|"+platillo.getDescripcion()+"|"+platillo.getCategoria()+"|"+platillo.getPrecio()+"|"+platillo.getRutaImagen())); //pasa lo del objeto al archivo
             }
              pw.close();
             
@@ -116,13 +116,14 @@ public class Ventana extends JFrame{
     public void crearNuevoPlatillo(String nombrePlatillo,String descripcion, String categoria, float precio, String rutaImagen ){
         platillo = new Platillo(nombrePlatillo,descripcion,categoria,precio,rutaImagen);
         
-        if(listaPlatillos.buscaNombre(platillo.getNombre())!= -1)mensaje("Este nombre ya existe"); // si ya existe
-        else {
-            listaPlatillos.agregarPlatillo(platillo);
-            mensaje("Creado correctamente");
-        }
-        
+        //if(listaPlatillos.buscaNombre(platillo.getNombre())!= -1)mensaje("Este nombre ya existe"); // si ya existe
+       // else {
+        listaPlatillos.agregarPlatillo(platillo);
+        mensaje("Creado correctamente");
         grabar_txt();
+       // }
+        
+        
     }
     //---- funcion q modifica el platillo de la lista y reescribe el txt---  ( hay q verificar que los txt field esten bien)    
     public void modificarPlatillo(String nombrePlatillo,String descripcion, String categoria, float precio, String rutaImagen ){
@@ -549,7 +550,7 @@ public class Ventana extends JFrame{
         lblSelec.setLocation(70,310);
         subfondo.add(lblSelec);
 
-        String [] opcs ={"Comida Rapida", "Mariscos", "Ensaladas", "Postres","Bebidas","Sushi"};
+        String [] opcs ={"Comida Rapida", "Mariscos", "Ensaladas", "Postres","Bebidas","Sushi","Pastas","Comida Mexicana"};
         JComboBox <String> categorias = new JComboBox<>(opcs);
         categorias.getSelectedItem();
         categorias.setSize(250,20);
@@ -672,16 +673,27 @@ public class Ventana extends JFrame{
         crearP.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
-                // condiciones
-                /* 
                 String nombre= txtNombre.getText();
-                String descripcion="";
-                String categoria=""; 
-                float precio;
-                String rutaImagen="" ;
-                crearNuevoPlatillo(nombre,descripcion,categoria,precio,rutaImagen);*/
-                actualizarPanel(2); // redirecciona a inicio
+                String descripcion=txtDesc.getText();
+                String categoria=(String) categorias.getSelectedItem();; 
+                String tprecio=txtPrecio.getText(); // primero pasarlo a string y luego a float
+                
+                String rutaImagen="imgPlatillos/"+nombreImagen;
+                // condiciones
+                
+              if((!nombreImagen.equals("iconoImagen.png")&&!nombre.isEmpty())&&(!descripcion.isEmpty())&&(!tprecio.isEmpty())){
+
+                float precio=Float.parseFloat(txtPrecio.getText());
+                System.out.println(nombreImagen);
+                if(listaPlatillos.buscaNombre(nombre)!= -1)mensaje("Este platillo ya existe"); // si ya existe
+                else {
+                    crearNuevoPlatillo(nombre,descripcion,categoria,precio,rutaImagen);
+                        actualizarPanel(2); // redirecciona a inicio
+                }
+                }
+                else
+                mensaje("Debe llenar todos los campos y adjuntar una imagen");
+                
             }
         });
         subfondo.add(crearP);
