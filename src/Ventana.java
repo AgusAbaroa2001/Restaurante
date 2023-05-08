@@ -600,13 +600,13 @@ public class Ventana extends JFrame{
 
          //  redimensiona y agrega la imagen del platillo
          int largo=200, ancho=200;
-         
+         /* 
          ImageIcon imagenOriginal = new ImageIcon(nombreImagen);
          Image imagen = imagenOriginal.getImage();
-         Image imagenRedimensionada = imagen.getScaledInstance(largo, ancho, Image.SCALE_SMOOTH);
-         ImageIcon imagenRedimensionadaIcon = new ImageIcon(imagenRedimensionada);
-         JLabel lblimagen = new JLabel(imagenRedimensionadaIcon);
+         Image imagenRedimensionada = imagen.getScaledInstance(largo, ancho, Image.SCALE_SMOOTH);*/
          
+         //ImageIcon imagenRedimensionadaIcon = redimensionarImagen(nombreImagen,200,200);
+         JLabel lblimagen = new JLabel(redimensionarImagen(nombreImagen,200,200));
          lblimagen.setSize(largo, ancho);
          lblimagen.setLocation(525,150);
          subfondo.add(lblimagen);
@@ -641,7 +641,7 @@ public class Ventana extends JFrame{
                             int extensionIndex = nombreArchivo.lastIndexOf(".");
                             nombreImagen= nombreArchivo.substring(0, extensionIndex) + ".png";
                             File carpetaImagenes = new File("imgPlatillos");
-                            carpetaImagenes.mkdir(); // Crear la carpeta si no existe
+                            //carpetaImagenes.mkdir(); // Crear la carpeta si no existe
                             File archivoNuevo = new File(carpetaImagenes, nombreImagen);
                             ImageIO.write(imagen, "png", archivoNuevo);
                             
@@ -652,6 +652,8 @@ public class Ventana extends JFrame{
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
+                    //ImageIcon imagenIcono = new ImageIcon("imgPlatillos/"+nombreImagen); 
+                    lblimagen.setIcon(redimensionarImagen("imgPlatillos/"+nombreImagen,200,200));
                 }
             }
 
@@ -687,6 +689,14 @@ public class Ventana extends JFrame{
 
 
         return fondo;
+    }
+
+    private ImageIcon redimensionarImagen(String rutaImagen,int largo, int ancho) {
+        ImageIcon imagenOriginal = new ImageIcon(rutaImagen);
+         Image imagen = imagenOriginal.getImage();
+         Image imagenRedimensionada = imagen.getScaledInstance(largo, ancho, Image.SCALE_SMOOTH);
+         ImageIcon imagenRedimensionadaIcon = new ImageIcon(imagenRedimensionada);
+        return imagenRedimensionadaIcon;
     }
 
     //---------------------------informacion del platillo-----------------------------------------

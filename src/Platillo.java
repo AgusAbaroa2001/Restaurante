@@ -13,8 +13,8 @@ public class Platillo {
         this.descripcion=descripcion;
         this.categoria=categoria;
         this.precio=precio;
-        this.rutaImagen= "/imgPlatillos/"+rutaImagen;
-        imagen= new ImageIcon("/imgPlatillos/"+rutaImagen);
+        this.rutaImagen= rutaImagen;
+        imagen= new ImageIcon(rutaImagen);
     }
 
     public Platillo() {
@@ -55,11 +55,11 @@ public class Platillo {
         this.precio=precio;
     }
     public void setRutaImagen(String rutaImagen){
-        this.rutaImagen= "/imgPlatillos/"+rutaImagen;
-        imagen= new ImageIcon("/imgPlatillos/"+rutaImagen);
+        this.rutaImagen= rutaImagen;
+        imagen= new ImageIcon(rutaImagen);
     }
 
     public void setImagenIcon(String rutaImagen){
-        imagen= new ImageIcon("/imgPlatillos/"+rutaImagen);
+        imagen= new ImageIcon(rutaImagen);
     }
 }
