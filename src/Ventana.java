@@ -63,7 +63,7 @@ public class Ventana extends JFrame{
         this.setTitle("Gourmet Eats");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
-        tabla= new JTable();
+        
 
         listaPlatillos= new ListaPlatillos();
         listaOrdenes= new ListaOrdenes();
@@ -72,8 +72,8 @@ public class Ventana extends JFrame{
         cargarTxtOrdenes();
         
 
-        //panel= login(); // panel  principal
-        panel= pantallaInicio(); // para testear paneles
+        panel= login(); // panel  principal
+        //panel= pantallaInicio(); // para testear paneles
         panel.setSize(this.getWidth(), this.getHeight());;
         panel.setLocation(0,0);
         // panel.setBackground(Color.decode("#0665c0"));
@@ -239,6 +239,7 @@ public class Ventana extends JFrame{
             if(s == 0){
                 listaPlatillos.eliminarPlatillo(posicion);
                 grabar_txt();
+                mensaje("Eliminado");
             }
         }
  
@@ -255,6 +256,7 @@ public class Ventana extends JFrame{
             if(s == 0){
                 listaOrdenes.eliminarOrden(posicion);
                 grabar_txtOrdenes();
+                mensaje("Eliminado");
             }
         }
  
@@ -1373,6 +1375,7 @@ public class Ventana extends JFrame{
     }
     //--------------------aqui se consultan las ordenes--------------------------------
     public JPanel consultaOrden(){
+        tabla= new JTable();
         float totalPrice=0;
 	    int totalPlatos=0;
 
