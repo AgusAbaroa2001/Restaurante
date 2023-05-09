@@ -225,7 +225,7 @@ public class Ventana extends JFrame{
         if(posicion != -1) // si lo encuentra en la lista
         listaOrdenes.modificarOrden(posicion, orden);
         
-        grabar_txt();
+        grabar_txtOrdenes();
     }
     //---- funcion para eliminar platillo de la lista y reescribir txt---
     public void eliminarPlatillo(String nombrePlatillo){
@@ -244,17 +244,17 @@ public class Ventana extends JFrame{
  
     }
     //---- funcion para eliminar platillo de la lista y reescribir txt---
-    public void eliminarOrden(int id){
+    public void eliminarOrden(String nombre){
 
-        int posicion = listaOrdenes.buscaId(id);
+        int posicion = listaOrdenes.buscaNombre(nombre);
 
-        if(posicion == -1) mensaje("codigo no existe");
+        if(posicion == -1) mensaje("nombre no existe");
         
         else{
             int s = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar esta orden?","Si/No",0);
             if(s == 0){
                 listaOrdenes.eliminarOrden(posicion);
-                grabar_txt();
+                grabar_txtOrdenes();
             }
         }
  
@@ -1420,39 +1420,7 @@ public class Ventana extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
-                String nombreSeleccionado=(String) nombres.getSelectedItem();
-                int posicion = listaOrdenes.buscaNombre(nombreSeleccionado);
-                Orden orden = listaOrdenes.obtenerOrden(posicion);
-                DefaultTableModel modelo = new DefaultTableModel(){
-                    @Override
-                    public boolean isCellEditable(int row, int column){
-                        return false;
-                    }
-                };
-                
-                modelo.addColumn("Platillo");
-                modelo.addColumn("Cantidad");
-                
-            
-                    Object fila[] = new Object[2];
-                    for(int i = 0; i < listaOrdenes.obtenerOrden(posicion).nombresPlatilos.size(); i++){
-                       
-                        fila[0] = orden.getNombresPlatilos().get(i);
-                        fila[1] = orden.getCantidadesPlatillos().get(i);
-                        
-                        modelo.addRow(fila);
-                    }
-                    /*String [] secciones = {"Platillo", "Cantidad"};
-                    String[][] datos ={
-                            {"a ", "b " },
-                            {"d ", "e " },
-                            {"g ", "h " },
-                    };*/
-            
-                    //DefaultTableModel modelo = new DefaultTableModel(datos,secciones);
-                    tabla.setModel(modelo);
-                    lblTotalPrecio.setText("Total a pagar: $"+orden.getPrecioTotal());
-                    lblTotalPlatos.setText("Total platillos: "+orden.getTotalPlatillos());
+               actualizarTabla((String) nombres.getSelectedItem());
                 
             }
             
@@ -1489,6 +1457,22 @@ public class Ventana extends JFrame{
         eliminar.setLocation(70,520);
         eliminar.setBackground(Color.decode("#E96241"));
         eliminar.setForeground(Color.white);
+
+        eliminar.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO Auto-generated method stub
+                String nombreSeleccionado=(String) nombres.getSelectedItem();
+                //int posicion = listaOrdenes.buscaNombre(nombreSeleccionado);
+                eliminarOrden(nombreSeleccionado);
+                //listaOrdenes.eliminarOrden(posicion);
+                actualizarPanel(2);
+                
+                
+            }
+
+        });
         subfondo.add(eliminar);
 
         JButton editar = new JButton("Editar Orden");
@@ -1513,6 +1497,41 @@ public class Ventana extends JFrame{
 
         return fondo;
 
+    }
+    public void actualizarTabla(String seleccion){
+        String nombreSeleccionado=seleccion;
+        int posicion = listaOrdenes.buscaNombre(nombreSeleccionado);
+        Orden orden = listaOrdenes.obtenerOrden(posicion);
+        DefaultTableModel modelo = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
+        
+        modelo.addColumn("Platillo");
+        modelo.addColumn("Cantidad");
+        
+    
+            Object fila[] = new Object[2];
+            for(int i = 0; i < listaOrdenes.obtenerOrden(posicion).nombresPlatilos.size(); i++){
+               
+                fila[0] = orden.getNombresPlatilos().get(i);
+                fila[1] = orden.getCantidadesPlatillos().get(i);
+                
+                modelo.addRow(fila);
+            }
+            /*String [] secciones = {"Platillo", "Cantidad"};
+            String[][] datos ={
+                    {"a ", "b " },
+                    {"d ", "e " },
+                    {"g ", "h " },
+            };*/
+    
+            //DefaultTableModel modelo = new DefaultTableModel(datos,secciones);
+            tabla.setModel(modelo);
+            lblTotalPrecio.setText("Total a pagar: $"+orden.getPrecioTotal());
+            lblTotalPlatos.setText("Total platillos: "+orden.getTotalPlatillos());
     }
 
     public JPanel consultarPlatillos(){
@@ -1566,6 +1585,7 @@ public class Ventana extends JFrame{
                 public void actionPerformed(ActionEvent e) {
                     // TODO Auto-generated method stub
                     eliminarPlatillo(elemento.platillo.getNombre()); // dentro de esta funcion ya pregunta si quiere eliminarlo
+                    
                     actualizarPanel(4);
 
                 }
