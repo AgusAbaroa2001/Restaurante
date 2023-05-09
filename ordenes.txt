@@ -1,0 +1,2 @@
+1|Delia|82.0|2|Papas fritas|2
+2|Alma|121.0|2|Papas fritas,Hamburguesa|1,1

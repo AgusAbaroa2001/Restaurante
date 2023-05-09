@@ -15,6 +15,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import javax.imageio.ImageIO;
@@ -43,6 +44,14 @@ public class Ventana extends JFrame{
     public ListaPlatillos listaPlatillos;
     String [] opcs ={"Comida Rapida", "Mariscos", "Ensaladas", "Postres","Bebidas","Sushi","Pastas","Comida Mexicana"};
     //
+    //---- variables para hacer funcionar CRUD ordenes---
+    public float totalPrice; //pnel crear orden
+    public int totalPlatos;//pnel crear orden
+    ListaOrdenes listaOrdenes;
+    String name;
+    public String rutaTxtOrdenes = "ordenes.txt";
+    public Orden orden;
+    //
     public Ventana() {
 
         this.setSize(900,700); // medidas provisionales, se pueden cambiar
@@ -52,10 +61,13 @@ public class Ventana extends JFrame{
         this.setResizable(false);
 
         listaPlatillos= new ListaPlatillos();
+        listaOrdenes= new ListaOrdenes();
+
         cargarTxtPlatillos(); // try catch?
-        
-        panel= login(); // panel  principal
-        //panel= crearPlatillo(); // para testear paneles
+        //cargarTxtOrdenes();
+
+        //panel= login(); // panel  principal
+        panel= pantallaInicio(); // para testear paneles
         panel.setSize(this.getWidth(), this.getHeight());;
         panel.setLocation(0,0);
         // panel.setBackground(Color.decode("#0665c0"));
@@ -63,6 +75,10 @@ public class Ventana extends JFrame{
 
         this.revalidate();
         this.setVisible(true);
+    }
+
+    private void cargarTxtOrdenes() {
+
     }
 
     //------ mensaje de dialogo customizable----
@@ -113,6 +129,24 @@ public class Ventana extends JFrame{
             System.out.println(ex.getMessage());
         }
     }
+    public void grabar_txtOrdenes(){
+        FileWriter fw;
+        PrintWriter pw;
+        try{
+            fw = new FileWriter(rutaTxtOrdenes);
+            pw = new PrintWriter(fw);
+            
+            for(int i = 0; i < listaOrdenes.cantidadOrdenes(); i++){
+                orden = listaOrdenes.obtenerOrden(i);
+                pw.println(String.valueOf(orden.getId()+"|"+orden.getNombreCliente()+"|"+orden.getPrecioTotal()+"|"+orden.getTotalPlatillos()+"|"+String.join(",", orden.getNombresPlatilos())+"|"+orden.getStringCantidadesPlatillos())); //pasa lo del objeto al archivo
+            }
+             pw.close();
+            
+        }catch(Exception ex){
+            mensaje("Error al grabar archivo: "+ex.getMessage());
+            System.out.println(ex.getMessage());
+        }
+    }
 
     //---- funcion q agrega platillo a la lista y reescribe el txt---  ( hay q verificar que los txt field esten bien)
     public void crearNuevoPlatillo(String nombrePlatillo,String descripcion, String categoria, float precio, String rutaImagen ){
@@ -123,6 +157,19 @@ public class Ventana extends JFrame{
         listaPlatillos.agregarPlatillo(platillo);
         mensaje("Creado correctamente");
         grabar_txt();
+       // }
+        
+        
+    }
+     //---- funcion q agrega platillo a la lista y reescribe el txt---  ( hay q verificar que los txt field esten bien)
+     public void crearNuevaOrden(String nombreCliente,float precioTotal,int totalPlatillos, ArrayList<String> nombresPlatilos,ArrayList<Integer> cantidadesPlatillos){
+        orden = new Orden(nombreCliente,precioTotal,totalPlatillos,nombresPlatilos,cantidadesPlatillos);
+        
+        //if(listaPlatillos.buscaNombre(platillo.getNombre())!= -1)mensaje("Este nombre ya existe"); // si ya existe
+       // else {
+        listaOrdenes.agregarOrden(orden);
+        mensaje("Creado correctamente");
+        grabar_txtOrdenes();
        // }
         
         
@@ -1455,8 +1502,10 @@ public class Ventana extends JFrame{
 
     public JPanel crearOrden(){
         // ------------------panel Crear nueva  Orden--------------------
-        float totalPrice=0;
-	    int totalPlatos=0;
+        totalPrice=0;
+	    totalPlatos=0;
+        ArrayList<String> nombresPlatosOrden = new ArrayList<String>();
+        ArrayList<Integer> cantidadesPlatosOrden = new ArrayList<Integer>();
 
         JPanel crearOrden= new JPanel();
 		crearOrden.setLayout(new BorderLayout());
@@ -1486,7 +1535,64 @@ public class Ventana extends JFrame{
 		JLabel lblTotalPlatos= new JLabel("Total platillos: "+totalPlatos, JLabel.CENTER);
 		lblTotalPlatos.setForeground(Color.white);
 		lblTotalPlatos.setFont(new Font("Leelawadee UI Semilight", Font.TRUETYPE_FONT, 20));
+		//-------------------panel elementos---------------
+		JPanel panelElementos= new JPanel();
+		panelElementos.setLayout(new GridLayout(0,3,10, 10));
+		panelElementos.setOpaque(true);
+		panelElementos.setBackground(azul);
 		
+		// añadir elementos al panel  
+        ArrayList<ElementoPanelOrden> listaPanelesElementos = new ArrayList<ElementoPanelOrden>();
+
+        for (int i=0;i<listaPlatillos.cantidadPlatillos();i++){
+            platillo=listaPlatillos.obtenerPlatillo(i);
+            ElementoPanelOrden elemento =new ElementoPanelOrden(listaPlatillos.obtenerPlatillo(i));
+            listaPanelesElementos.add(elemento);
+            elemento.getbtnInfo().addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // TODO Auto-generated method stub
+                    actualizarPanel2(8, elemento.platillo);
+                }
+                
+            });
+            elemento.getbtnMenos().addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // TODO Auto-generated method stub
+                    int cantidad=elemento.getCantidad();
+                    if(cantidad>0) {
+                        elemento.setCantidad(cantidad-1);
+                        totalPrice-=elemento.platillo.getPrecio();
+                        lblTotalPrecio.setText("Total: "+totalPrice);
+
+                        totalPlatos--;
+                        lblTotalPlatos.setText("Total platillos: "+totalPlatos);
+                    }
+                }
+           
+            });
+
+            elemento.getbtnMas().addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // TODO Auto-generated method stub
+                    int cantidad=elemento.getCantidad();
+					elemento.setCantidad(cantidad+1);
+                    totalPrice+=elemento.platillo.getPrecio();
+                    lblTotalPrecio.setText("Total: "+totalPrice);
+
+                    totalPlatos++;
+                    lblTotalPlatos.setText("Total platillos: "+totalPlatos);
+                }
+           
+            });
+
+            panelElementos.add(elemento.elemento);
+        }
         // boton crear----------
 		JButton btnCrear= new JButton("Crear");
         btnCrear.setBackground(azul);
@@ -1498,73 +1604,47 @@ public class Ventana extends JFrame{
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                nombresPlatosOrden.clear();
+                cantidadesPlatosOrden.clear();
                 // TODO Auto-generated method stub
-                String name = JOptionPane.showInputDialog("Nombre del cliente:");
-		        //JOptionPane.showMessageDialog(null, "Hello " + name);
-                JOptionPane.showMessageDialog(null,"Hello " + name+", esto aun no hace nada");
+                
+                do {
+                    name = JOptionPane.showInputDialog("Nombre Cliente");
+                } while (name.isEmpty());
+                
+		        
+                for (int i=0;i<listaPanelesElementos.size();i++){
+                    if(listaPanelesElementos.get(i).getCantidad()>0){
+                        nombresPlatosOrden.add(listaPanelesElementos.get(i).platillo.getNombre());
+                        cantidadesPlatosOrden.add(listaPanelesElementos.get(i).getCantidad());
+                    }
+                }
+
+                // si la lista nombresPlatosOrden no esta vacia crear orden
+                if (nombresPlatosOrden!=null){
+                    crearNuevaOrden(name,totalPrice,totalPlatos,nombresPlatosOrden,cantidadesPlatosOrden);
+                    actualizarPanel(7);
+                    //mensaje("Guardado");
+                } 
+               // Orden orden = new Orden(name,totalPrice,totalPlatos,nombresPlatosOrden,cantidadesPlatosOrden);
+                System.out.println(nombresPlatosOrden);
+                System.out.println(cantidadesPlatosOrden);
+
+                //JOptionPane.showMessageDialog(null,"Hello " + name+", esto aun no hace nada");
                 //actualizarPanel(2);
             }
             
         });
-
+       
 
 		pAbajo.add(lblTotalPrecio);
 		pAbajo.add(lblTotalPlatos);
-		pAbajo.add(btnCrear);
+        pAbajo.add(btnCrear);
 		
 		crearOrden.add(pAbajo, BorderLayout.SOUTH);
 
-		//-------------------panel elementos---------------
-		JPanel panelElementos= new JPanel();
-		panelElementos.setLayout(new GridLayout(0,3,10, 10));
-		panelElementos.setOpaque(true);
-		panelElementos.setBackground(azul);
 		
-		// añadir elementos al panel 
-
-        // añadir elementos al panel 
-
-        // añadir elementos de la lista al panel 
-        for (int i=0;i<listaPlatillos.cantidadPlatillos();i++){
-            platillo=listaPlatillos.obtenerPlatillo(i);
-            ElementoPanelOrden elemento =new ElementoPanelOrden(listaPlatillos.obtenerPlatillo(i));
-            elemento.getbtnInfo().addActionListener(new ActionListener() {
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // TODO Auto-generated method stub
-                    actualizarPanel2(8, elemento.platillo);
-                }
-                
-            });
-            panelElementos.add(elemento.elemento);
-        }
-        /*
-        for (int i=0;i<8;i++){
-            ElementoPanelOrden elemento =new ElementoPanelOrden("Pasta","pasta.jpg",400);
-            
-            elemento.getbtnInfo().addActionListener(new ActionListener() {
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // TODO Auto-generated method stub
-                    actualizarPanel(8);// redirecciona a info orden platillo
-                }
-                
-            });
-            panelElementos.add(elemento.elemento);
-            
-        }*/
-        /* 
-		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
-		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
-		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
-		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
-		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
-		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
-		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
-		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
-	    */
+        
 		// ---------scrollpane---------
 		JScrollPane scrollPane = new JScrollPane(panelElementos);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);

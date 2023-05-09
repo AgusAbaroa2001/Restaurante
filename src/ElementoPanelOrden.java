@@ -118,7 +118,7 @@ public class ElementoPanelOrden extends JPanel{
         btnMas.setFocusPainted(false);
        
         //---- acciones botones para aumentar o disminuir cantidades------
-        btnMenos.addActionListener(new ActionListener() {
+        /*btnMenos.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -140,7 +140,7 @@ public class ElementoPanelOrden extends JPanel{
 					lblcantidad.setText(""+cantidad);
 			}
         	
-        });
+        });*/
         
         pAbajo.add(btnMenos);
         pAbajo.add(lblcantidad);
@@ -149,7 +149,7 @@ public class ElementoPanelOrden extends JPanel{
         elemento.add(pCentro,BorderLayout.CENTER);
         elemento.add(pAbajo,BorderLayout.SOUTH);
 	}
-
+    
     public int getCantidad(){
         return cantidad;
     }
