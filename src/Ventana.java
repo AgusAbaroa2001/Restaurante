@@ -863,12 +863,12 @@ public class Ventana extends JFrame{
     }
 
     //-------------------------------informacion de la orden--------------------------------
-    public JPanel infoOrden(){
-        String nombrePlatillo="Pasta";
-        String description="Deliciosa pasta con salsa de tomate ";
-        String platoCategoria="Comida Rapida";
-        float precioPlato=400;
-        String nombreImagen="pasta.jpg";
+    public JPanel infoOrden(Platillo platillo){
+        String nombrePlatillo=platillo.getNombre();
+        String description=platillo.getDescripcion();
+        String platoCategoria=platillo.getCategoria();
+        float precioPlato=platillo.getPrecio();
+        String nombreImagen=platillo.getRutaImagen();
 
         JPanel fondo = new JPanel();
         fondo.setBackground(Color.decode("#E96241"));
@@ -1413,15 +1413,13 @@ public class Ventana extends JFrame{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // TODO Auto-generated method stub
-                    eliminarPlatillo(elemento.platillo.getNombre());
+                    eliminarPlatillo(elemento.platillo.getNombre()); // dentro de esta funcion ya pregunta si quiere eliminarlo
                     actualizarPanel(4);
 
                 }
 
             });
-
             panelElementos.add(elemento.elemento);
-            
         }
 		
 		// ---------scrollpane---------
@@ -1501,8 +1499,10 @@ public class Ventana extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
-                JOptionPane.showMessageDialog(null,"Creado");
-                actualizarPanel(2);
+                String name = JOptionPane.showInputDialog("Nombre del cliente:");
+		        //JOptionPane.showMessageDialog(null, "Hello " + name);
+                JOptionPane.showMessageDialog(null,"Hello " + name+", esto aun no hace nada");
+                //actualizarPanel(2);
             }
             
         });
@@ -1523,6 +1523,23 @@ public class Ventana extends JFrame{
 		// añadir elementos al panel 
 
         // añadir elementos al panel 
+
+        // añadir elementos de la lista al panel 
+        for (int i=0;i<listaPlatillos.cantidadPlatillos();i++){
+            platillo=listaPlatillos.obtenerPlatillo(i);
+            ElementoPanelOrden elemento =new ElementoPanelOrden(listaPlatillos.obtenerPlatillo(i));
+            elemento.getbtnInfo().addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // TODO Auto-generated method stub
+                    actualizarPanel2(8, elemento.platillo);
+                }
+                
+            });
+            panelElementos.add(elemento.elemento);
+        }
+        /*
         for (int i=0;i<8;i++){
             ElementoPanelOrden elemento =new ElementoPanelOrden("Pasta","pasta.jpg",400);
             
@@ -1537,7 +1554,7 @@ public class Ventana extends JFrame{
             });
             panelElementos.add(elemento.elemento);
             
-        }
+        }*/
         /* 
 		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
 		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
@@ -1665,7 +1682,7 @@ public class Ventana extends JFrame{
 		panelElementos.setBackground(azul);
 		
 		// añadir elementos al panel 
-        
+        /* 
         for (int i=0;i<8;i++){
             ElementoPanelOrden elemento =new ElementoPanelOrden("Pasta","pasta.jpg",400);
             
@@ -1680,7 +1697,7 @@ public class Ventana extends JFrame{
             });
             panelElementos.add(elemento.elemento);
             
-        }
+        }*/
         /* 
 		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
 		panelElementos.add(new  ElementoPanelOrden("Pasta","pasta.jpg",400).elemento);
@@ -1756,11 +1773,6 @@ public class Ventana extends JFrame{
                 panel=crearOrden();
                 this.add(panel);
                 break;
-
-            case 8:
-                panel=infoOrden();
-                this.add(panel);
-                break;
             case 9:
             panel=consultaOrden();
             this.add(panel);
@@ -1797,7 +1809,7 @@ public class Ventana extends JFrame{
             this.add(panel);
             break;
         case 8:
-            panel=infoOrden();
+            panel=infoOrden(platillo);
             this.add(panel);
             break;
        

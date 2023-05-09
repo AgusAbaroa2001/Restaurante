@@ -33,7 +33,7 @@ public class ElementoPanelConsultar extends JPanel{
 		rutaImagen=platillo.rutaImagen;
 		this.precio=platillo.precio;
 		nombrePlatillo=platillo.nombre;
-        this.platillo=platillo;
+        //this.platillo=platillo;
 		
 		// --- panel principal
 		elemento = new JPanel(new BorderLayout()); 

@@ -15,24 +15,30 @@ import javax.swing.JPanel;
 
 public class ElementoPanelOrden extends JPanel{
     JButton btninfo;
+    JButton btnMenos;
+    JButton btnMas;
+
 	Color naranja= new Color(233,98,65);
 	Color azul= new Color(56,57,82);
+
 	JPanel elemento;
-	JLabel lblNombre;
+	JLabel lblcantidad;
 	//JLabel descripcion ;
 	//JLabel categoria;
-	JLabel price;
+	
 	String nombrePlatillo;
 	float precio;
 	String rutaImagen;
 	int cantidad;
+    Platillo platillo;
 	 //imagenOriginal;
 	
-	public ElementoPanelOrden(String nombre, String ruta,float precio) {
+	public ElementoPanelOrden(Platillo platillo) {
 		cantidad=0;
-		rutaImagen=ruta;
-		this.precio=precio;
-		nombrePlatillo=nombre;
+        this.platillo=platillo;
+		rutaImagen=platillo.getRutaImagen();
+		this.precio=platillo.getPrecio();
+		nombrePlatillo=platillo.getNombre();
 		
 		// --- panel principal
 		elemento = new JPanel(new BorderLayout()); 
@@ -53,7 +59,7 @@ public class ElementoPanelOrden extends JPanel{
         JPanel pCentro= new JPanel(new BorderLayout()); 
         pCentro.setBackground(Color.white);
         // redimensionar foto
-        ImageIcon imagenOriginal = new ImageIcon(ruta);
+        ImageIcon imagenOriginal = new ImageIcon(rutaImagen);
         Image imagen = imagenOriginal.getImage();
         Image imagenRedimensionada = imagen.getScaledInstance(200, 150, Image.SCALE_SMOOTH);
         ImageIcon imagenRedimensionadaIcon = new ImageIcon(imagenRedimensionada);
@@ -62,7 +68,7 @@ public class ElementoPanelOrden extends JPanel{
         
         
        
-        price = new JLabel("$"+precio+" MXN",JLabel.CENTER);
+        JLabel price = new JLabel("$"+precio+" MXN",JLabel.CENTER);
         price.setForeground(naranja);
         price.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 20));
         price.setPreferredSize(new Dimension(66, 20)); 
@@ -74,7 +80,7 @@ public class ElementoPanelOrden extends JPanel{
         //-------panel nombre platillo y boton info arriba 
         JPanel pArriba= new JPanel(new FlowLayout( FlowLayout.CENTER)); 
         pArriba.setBackground(Color.white);
-        lblNombre = new JLabel(nombrePlatillo,JLabel.CENTER);
+        JLabel lblNombre = new JLabel(nombrePlatillo,JLabel.CENTER);
         lblNombre.setForeground(naranja);
         lblNombre.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 20));
         lblNombre.setPreferredSize(new Dimension(200, 20)); // Establece tamaño preferido en lugar de setSize() para cuando se usan layouts
@@ -94,18 +100,18 @@ public class ElementoPanelOrden extends JPanel{
         JPanel pAbajo= new JPanel(new FlowLayout( FlowLayout.CENTER)); 
         pAbajo.setBackground(Color.white);
         
-        JButton btnMenos= new JButton("-");
+        btnMenos= new JButton("-");
         btnMenos.setBackground(naranja);
         btnMenos.setForeground(Color.white);
         btnMenos.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 15));
         btnMenos.setFocusPainted(false);
         
-        JLabel lblcantidad = new JLabel(""+cantidad,JLabel.CENTER);
+        lblcantidad = new JLabel(""+cantidad,JLabel.CENTER);
         lblcantidad.setForeground(naranja);
         lblcantidad.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 20));
         lblcantidad.setPreferredSize(new Dimension(66, 20)); 
         
-        JButton btnMas= new JButton("+");
+        btnMas= new JButton("+");
         btnMas.setBackground(naranja);
         btnMas.setForeground(Color.white);
         btnMas.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 15));
@@ -144,7 +150,25 @@ public class ElementoPanelOrden extends JPanel{
         elemento.add(pAbajo,BorderLayout.SOUTH);
 	}
 
+    public int getCantidad(){
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad){
+        lblcantidad.setText(""+cantidad);
+        this.cantidad=cantidad;
+    }
+
+
     public JButton getbtnInfo(){
         return btninfo;
+    }
+
+    public JButton getbtnMenos(){
+        return btnMenos;
+    }
+
+    public JButton getbtnMas(){
+        return btnMas;
     }
 }
