@@ -1,1 +1,4 @@
 1|Delia|82.0|2|Papas fritas|2
+2|Alma|121.0|2|Papas fritas,Hamburguesa|1,1
+3|jose|400.0|5|Hamburguesa|5
+4|Maria|161.0|2|Pasta,Papas fritas|1,1
