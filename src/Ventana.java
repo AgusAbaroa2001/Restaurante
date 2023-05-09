@@ -686,7 +686,6 @@ public class Ventana extends JFrame{
               if((!nombreImagen.equals("iconoImagen.png")&&!nombre.isEmpty())&&(!descripcion.isEmpty())&&(!tprecio.isEmpty())){
 
                 float precio=Float.parseFloat(txtPrecio.getText());
-                System.out.println(nombreImagen);
                 if(listaPlatillos.buscaNombre(nombre)!= -1)mensaje("Este platillo ya existe"); // si ya existe
                 else {
                     crearNuevoPlatillo(nombre,descripcion,categoria,precio,rutaImagen);
@@ -998,7 +997,7 @@ public class Ventana extends JFrame{
 
     //--------------------aqui se editan los platillos-------------------------------------ya
     public JPanel editarPlatillo(Platillo platillo){
-        String nombreImagen=platillo.getRutaImagen();
+        nombreImagen=platillo.getRutaImagen();
 
         JPanel fondo = new JPanel();
         fondo.setBackground(Color.decode("#E96241"));
@@ -1160,12 +1159,43 @@ public class Ventana extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
-               mensaje("aun no sube imgagen");
+                 // Mostrar el cuadro de diálogo para seleccionar un archivo
+                 JFileChooser selector = new JFileChooser();
+                 FileNameExtensionFilter filtro = new FileNameExtensionFilter("png,jpg", "png", "jpg");
+                 selector.setFileFilter(filtro);
+                 
+                 if (selector.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                     // Si el usuario seleccionó un archivo, intentar cargarlo como imagen
+                     File archivoImagen = selector.getSelectedFile();
+                     try {
+                             BufferedImage imagen = ImageIO.read(archivoImagen);
+                             if(imagen!=null) {
+ 
+                             // Guardar la imagen en la carpeta "imgPlatillos" en formato PNG
+                             String nombreArchivo = archivoImagen.getName();
+                             int extensionIndex = nombreArchivo.lastIndexOf(".");
+                             nombreImagen= nombreArchivo.substring(0, extensionIndex) + ".png";
+                             File carpetaImagenes = new File("imgPlatillos");
+                             //carpetaImagenes.mkdir(); // Crear la carpeta si no existe
+                             File archivoNuevo = new File(carpetaImagenes, nombreImagen);
+                             ImageIO.write(imagen, "png", archivoNuevo);
+                             
+                         }
+                             else
+                                 JOptionPane.showMessageDialog(null, "Seleccione un archivo fomato png o jpg");
+                         
+                     } catch (IOException ex) {
+                         ex.printStackTrace();
+                     }
+                     //ImageIcon imagenIcono = new ImageIcon("imgPlatillos/"+nombreImagen); 
+                     lblimagen.setIcon(redimensionarImagen("imgPlatillos/"+nombreImagen,200,200));
+                 }
             }
             
         });
         subfondo.add(fotobtn);
 
+        //boton de actualizar 
         JButton crearP = new JButton("Actualizar");
         crearP.setSize(150,50);
         crearP.setLocation(600,500);
@@ -1176,8 +1206,39 @@ public class Ventana extends JFrame{
         crearP.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,"aun no actualiza esta funcion");
-                //actualizarPanel(5); // lo regresamos a info platillo o a consultar platillos?
+                String nuevoNombre= txtNombre.getText();
+                String descripcion=txtDesc.getText();
+                String categoria=(String) categorias.getSelectedItem();; 
+                String tprecio=txtPrecio.getText(); // primero pasarlo a string y luego a float
+                String rutaImagen;
+                if(nombreImagen.equals(platillo.getRutaImagen())){
+                    rutaImagen=nombreImagen;
+                }
+                else{
+                    rutaImagen="imgPlatillos/"+nombreImagen;
+                }
+                
+                // condiciones
+                
+              if((!nuevoNombre.isEmpty())&&(!descripcion.isEmpty())&&(!tprecio.isEmpty())){
+
+                float precio=Float.parseFloat(txtPrecio.getText());
+                if (!(nuevoNombre.contentEquals(platillo.getNombre())) &&(listaPlatillos.buscaNombre(nuevoNombre)!= -1)){ // si nuevo nombre no es el mismo que el anterior y  se encuentra dentro de la lista
+                    mensaje("Este platillo ya existe");
+                }
+                //if(listaPlatillos.buscaNombre(nombre)!= -1)mensaje("Este platillo ya existe"); // si ya existe
+                else {
+                    
+                    modificarPlatillo(nuevoNombre,descripcion,categoria,precio,rutaImagen);
+                    
+                    actualizarPanel2(5,listaPlatillos.obtenerPlatillo(listaPlatillos.buscaNombre(nuevoNombre))); // lo regresamos a info platillo
+                    mensaje("Platillo actualizado");
+                }
+                }
+                else
+                mensaje("Debe llenar todos los campos y adjuntar una imagen");
+                
+                
             }
         });
         subfondo.add(crearP);
@@ -1702,7 +1763,7 @@ public class Ventana extends JFrame{
         this.revalidate();
     }
 
-    //--------------funcion de actualizar las pantallas que necesitan de  un platillo-----------------
+    //--------------funcion de actualizar las pantallas que necesitan de la referencia de un platillo-----------------
    public void actualizarPanel2(int ventSiguiente,Platillo platillo) {
 
     anterior=actual;
@@ -1714,8 +1775,6 @@ public class Ventana extends JFrame{
 
     switch (actual) {
 
-        
- 
         case 5:
             panel=infoPlatillo(platillo);
             this.add(panel);
