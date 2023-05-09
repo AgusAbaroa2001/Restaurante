@@ -30,4 +30,11 @@ public class ListaOrdenes {
         }
         return -1;
     }
+    public int buscaNombre(String nombre){
+        for(int i = 0; i < cantidadOrdenes(); i++){
+           if(nombre.equals(obtenerOrden(i).getNombreCliente()))return i;
+        }
+        return -1;
+    }
+
 }

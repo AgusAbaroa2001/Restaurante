@@ -16,6 +16,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 import javax.imageio.ImageIO;
@@ -51,6 +52,9 @@ public class Ventana extends JFrame{
     String name;
     public String rutaTxtOrdenes = "ordenes.txt";
     public Orden orden;
+    JTable tabla;
+    JLabel lblTotalPrecio;
+    JLabel lblTotalPlatos;
     //
     public Ventana() {
 
@@ -59,12 +63,14 @@ public class Ventana extends JFrame{
         this.setTitle("Gourmet Eats");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
+        tabla= new JTable();
 
         listaPlatillos= new ListaPlatillos();
         listaOrdenes= new ListaOrdenes();
 
         cargarTxtPlatillos(); // try catch?
-        //cargarTxtOrdenes();
+        cargarTxtOrdenes();
+        
 
         //panel= login(); // panel  principal
         panel= pantallaInicio(); // para testear paneles
@@ -78,7 +84,32 @@ public class Ventana extends JFrame{
     }
 
     private void cargarTxtOrdenes() {
+        File ruta = new File("ordenes.txt");
+        try{
+            FileReader fr = new FileReader(ruta);
+            BufferedReader br = new BufferedReader(fr);
 
+            String linea = null;
+            while((linea = br.readLine())!=null){ // --este while agrega a la lista todos los Platillos del txt--
+                StringTokenizer st = new StringTokenizer(linea, "|"); // esto separa el renglon del txt para poder asignarle al producto sus atributos
+                orden = new Orden();
+                
+                
+                orden.setId(Integer.parseInt(st.nextToken()));
+                orden.setNombreCliente(st.nextToken());
+                orden.setPrecioTotal(Float.parseFloat(st.nextToken()));
+                orden.setTotalPlatillos(Integer.parseInt(st.nextToken()));
+                orden.setNombresPlatilos(new ArrayList<>(Arrays.asList(st.nextToken().split(",")))); 
+                orden.setCantidadesPlatillos2(st.nextToken());
+
+                listaOrdenes.agregarOrden(orden);
+            }
+            
+            br.close();
+        }catch(Exception ex){
+            mensaje("Error al cargar archivo: "+ex.getMessage());
+            System.out.println(ex.getMessage());
+        }
     }
 
     //------ mensaje de dialogo customizable----
@@ -185,6 +216,17 @@ public class Ventana extends JFrame{
         
         grabar_txt();
     }
+    //---- funcion q modifica el platillo de la lista y reescribe el txt---  ( hay q verificar que los txt field esten bien)    
+    public void modificarOrden(int id,String nombreCliente,float precioTotal,int totalPlatillos, ArrayList<String> nombresPlatilos,ArrayList<Integer> cantidadesPlatillos){
+        
+        int posicion = listaOrdenes.buscaId(id);
+        orden = new Orden(nombreCliente, precioTotal, totalPlatillos, nombresPlatilos,cantidadesPlatillos );
+        
+        if(posicion != -1) // si lo encuentra en la lista
+        listaOrdenes.modificarOrden(posicion, orden);
+        
+        grabar_txt();
+    }
     //---- funcion para eliminar platillo de la lista y reescribir txt---
     public void eliminarPlatillo(String nombrePlatillo){
 
@@ -196,6 +238,22 @@ public class Ventana extends JFrame{
             int s = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar este producto","Si/No",0);
             if(s == 0){
                 listaPlatillos.eliminarPlatillo(posicion);
+                grabar_txt();
+            }
+        }
+ 
+    }
+    //---- funcion para eliminar platillo de la lista y reescribir txt---
+    public void eliminarOrden(int id){
+
+        int posicion = listaOrdenes.buscaId(id);
+
+        if(posicion == -1) mensaje("codigo no existe");
+        
+        else{
+            int s = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar esta orden?","Si/No",0);
+            if(s == 0){
+                listaOrdenes.eliminarOrden(posicion);
                 grabar_txt();
             }
         }
@@ -1310,7 +1368,9 @@ public class Ventana extends JFrame{
 
         return fondo;
     }
+    public void listarRegistro(){
 
+    }
     //--------------------aqui se consultan las ordenes--------------------------------
     public JPanel consultaOrden(){
         float totalPrice=0;
@@ -1338,39 +1398,84 @@ public class Ventana extends JFrame{
         tituloCrear.setForeground(Color.decode("#FFFFFF"));
         subfondo.add(tituloCrear);
 
-        String [] secciones2 = {"Nombre1", "Nombre2", "Nombre3"};
-        JComboBox nombres = new JComboBox(secciones2);
+        //listaOrdenes
+        ArrayList<String> nombresClientes = new ArrayList<String>();
+        for(int i=0; i<listaOrdenes.cantidadOrdenes();i++){
+            nombresClientes.add(listaOrdenes.obtenerOrden(i).nombreCliente);
+        }
+        //String [] secciones2 = {"Nombre1", "Nombre2", "Nombre3"};
+
+        DefaultComboBoxModel<String> modeloCombo = new DefaultComboBoxModel<>();
+        for(String nombre : nombresClientes) {
+            modeloCombo.addElement(nombre);
+        }
+        JComboBox nombres = new JComboBox(modeloCombo);
         nombres.setBackground(naranja);
         nombres.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 15));
         nombres.setForeground(Color.white);
         nombres.setSize(300,35);
         nombres.setLocation(255,100);
+        nombres.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO Auto-generated method stub
+                String nombreSeleccionado=(String) nombres.getSelectedItem();
+                int posicion = listaOrdenes.buscaNombre(nombreSeleccionado);
+                Orden orden = listaOrdenes.obtenerOrden(posicion);
+                DefaultTableModel modelo = new DefaultTableModel(){
+                    @Override
+                    public boolean isCellEditable(int row, int column){
+                        return false;
+                    }
+                };
+                
+                modelo.addColumn("Platillo");
+                modelo.addColumn("Cantidad");
+                
+            
+                    Object fila[] = new Object[2];
+                    for(int i = 0; i < listaOrdenes.obtenerOrden(posicion).nombresPlatilos.size(); i++){
+                       
+                        fila[0] = orden.getNombresPlatilos().get(i);
+                        fila[1] = orden.getCantidadesPlatillos().get(i);
+                        
+                        modelo.addRow(fila);
+                    }
+                    /*String [] secciones = {"Platillo", "Cantidad"};
+                    String[][] datos ={
+                            {"a ", "b " },
+                            {"d ", "e " },
+                            {"g ", "h " },
+                    };*/
+            
+                    //DefaultTableModel modelo = new DefaultTableModel(datos,secciones);
+                    tabla.setModel(modelo);
+                    lblTotalPrecio.setText("Total a pagar: $"+orden.getPrecioTotal());
+                    lblTotalPlatos.setText("Total platillos: "+orden.getTotalPlatillos());
+                
+            }
+            
+        });
         subfondo.add(nombres);
-
-        String [] secciones = {"Platillo", "P.Unitario", "Cantidad"};
-        String[][] datos ={
-                {"a ", "b ","c " },
-                {"d ", "e ","f " },
-                {"g ", "h ","i " },
-        };
-
-        DefaultTableModel modelo = new DefaultTableModel(datos,secciones);
-
-        JTable tabla = new JTable(modelo);
         
+        
+      
+       
+        //tabla = new JTable(modelo);
         JScrollPane scroll = new JScrollPane(tabla);
         scroll.setSize(600,250);
         scroll.setLocation(105,150);
         subfondo.add(scroll);
 
-        JLabel lblTotalPrecio= new JLabel("Total a pagar: $"+totalPrice, JLabel.CENTER);
+        lblTotalPrecio= new JLabel("Total a pagar: $"+totalPrice, JLabel.CENTER);
 		lblTotalPrecio.setForeground(Color.white);
 		lblTotalPrecio.setFont(new Font("Leelawadee UI Semilight", Font.TRUETYPE_FONT, 20));
         lblTotalPrecio.setSize(300, 30);
 		lblTotalPrecio.setLocation(20,450);
         subfondo.add(lblTotalPrecio);
 
-		JLabel lblTotalPlatos= new JLabel("Total platillos: "+totalPlatos, JLabel.CENTER);
+		lblTotalPlatos= new JLabel("Total platillos: "+totalPlatos, JLabel.CENTER);
 		lblTotalPlatos.setForeground(Color.white);
 		lblTotalPlatos.setFont(new Font("Leelawadee UI Semilight", Font.TRUETYPE_FONT, 20));
         lblTotalPlatos.setSize(300, 30);
@@ -1401,7 +1506,7 @@ public class Ventana extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
-                actualizarPanel(10); // redirecciona a editar orden
+                //actualizarPanel(10); // redirecciona a editar orden
             }
 
         });

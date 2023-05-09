@@ -24,8 +24,15 @@ public class Orden {
 		
     } 
 
-    public int getId() {
+    public Orden() {
+		this.id = ++contador;
+	}
+
+	public int getId() {
 		return id;
+	} 
+	public void setId(int id) {
+		this.id=id;
 	} 
 
     public String getNombreCliente() {
@@ -73,6 +80,18 @@ public class Orden {
 		listaCantidades= cantidadesPlatillos.toString().replace("[", "")
                                         .replace("]", "")
                                         .replace(", ", ",");
+	}
+
+	public void setCantidadesPlatillos2(String cantidadesPlatillos) {
+		
+		listaCantidades= cantidadesPlatillos.toString().replace("[", "")
+                                        .replace("]", "")
+                                        .replace(", ", ",");
+		ArrayList<Integer> lista = new ArrayList<>();
+		for (String numero :listaCantidades.split(",")) {
+			lista.add(Integer.parseInt(numero));
+		}
+		this.cantidadesPlatillos = lista;
 	}
 
 	
