@@ -1407,6 +1407,19 @@ public class Ventana extends JFrame{
                 }
                 
             });
+
+            elemento.getBtnEliminar().addActionListener(new ActionListener(){
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // TODO Auto-generated method stub
+                    eliminarPlatillo(elemento.platillo.getNombre());
+                    actualizarPanel(4);
+
+                }
+
+            });
+
             panelElementos.add(elemento.elemento);
             
         }

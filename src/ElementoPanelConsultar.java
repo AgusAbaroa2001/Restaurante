@@ -29,6 +29,7 @@ public class ElementoPanelConsultar extends JPanel{
     Platillo platillo;
 	
 	public ElementoPanelConsultar(Platillo platillo) {
+        this.platillo=platillo;
 		rutaImagen=platillo.rutaImagen;
 		this.precio=platillo.precio;
 		nombrePlatillo=platillo.nombre;
